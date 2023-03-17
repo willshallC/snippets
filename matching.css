@@ -52,6 +52,8 @@ body{
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     transition: transform 0.25s linear;
     backface-visibility: hidden;
+    pointer-events: none;
+    user-select: none;
 }
 
 .card .front-view span{
@@ -67,10 +69,10 @@ body{
     max-width: 45px;
 }
 
-.card:hover .front-view{
+.card.flip .front-view{
     transform: rotateY(180deg);
 }
 
-.card:hover .back-view{
+.card.flip .back-view{
     transform: rotateY(0);
 }
