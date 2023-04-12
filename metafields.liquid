@@ -1,0 +1,12 @@
+{% for metafield in article.metafields.custom %}
+     {% if article.metafields.custom.heading[forloop.index0] != blank %}
+        <h2 class="texting ">
+      	 {{  article.metafields.custom.heading[forloop.index0] }}
+       </h2>
+     {% endif %}
+       {% if article.metafields.custom.description[forloop.index0] != blank %}
+        <h2 class="description ">
+      	 {{  article.metafields.custom.description[forloop.index0] }}
+       </h2>
+     {% endif %}
+   {% endfor %}
