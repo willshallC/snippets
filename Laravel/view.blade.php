@@ -33,3 +33,20 @@ extends('layouts.app', ['page' => __('My Profile'), 'pageSlug' => 'profile'])
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-4">
+					<table class="table tablesorter " id="">
+                            <tbody>
+                                <tr>
+                                    <td><img src="{{ $image_path  }}{{ auth()->user()->profile_pic ?? 'employee.jpg' }}" /></td>
+								</tr>
+                            </tbody>
+                        </table>
+					</div>
+                </div>
+                <div class="card-footer py-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
