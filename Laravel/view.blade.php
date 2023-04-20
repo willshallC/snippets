@@ -16,3 +16,20 @@ extends('layouts.app', ['page' => __('My Profile'), 'pageSlug' => 'profile'])
                         </div>
                     </div>
                 </div>
+                <div class="row col-md-12">
+                    @include('alerts.success')
+
+                    <div class="col-8">
+                        <table class="table tablesorter " id="">
+                            <tbody>
+                                <tr>
+                                    <td>Name :</td>
+                                    <td> {{ $admin->name }}</td>
+								</tr>
+                                <tr>
+                                    <td>Email :</td>
+                                    <td> {{ $admin->email }}</td>
+								</tr>
+                            </tbody>
+                        </table>
+                    </div>
