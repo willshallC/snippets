@@ -58,3 +58,38 @@
             </div>
 
         </br>
+        <div class="card edit_password">
+            <div class="card-header">
+                <h5 class="title">{{ __('Password') }}</h5>
+            </div>
+            <form method="post" action="{{ route('profile.password') }}" autocomplete="off" enctype="multipart/form-data">
+                <div class="card-body">
+                    @csrf
+                    @method('put')
+
+                    @include('alerts.success', ['key' => 'password_status'])
+
+                    <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
+                        <label>{{ __('Current Password') }}</label>
+                        <input type="password" name="old_password" class="form-control{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
+                        @include('alerts.feedback', ['field' => 'old_password'])
+                    </div>
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                        <label>{{ __('New Password') }}</label>
+                        <input type="password" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
+                        @include('alerts.feedback', ['field' => 'password'])
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __('Confirm New Password') }}</label>
+                        <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm New Password') }}" value="" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-fill btn-primary">{{ __('Change password') }}</button>
+                </div>
+                    <!--div class="card-footer">
+                      
+                    </div-->
+                </form>
+            </div>
+        </div>
