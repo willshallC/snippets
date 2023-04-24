@@ -8,3 +8,6 @@
             @endforeach
         </div>
     @endif
+    <div class="col-md-10 text-center ml-auto mr-auto">
+        <h1 class="card-title">{{ __('Log in and get to work') }}</h1>
+    </div>
