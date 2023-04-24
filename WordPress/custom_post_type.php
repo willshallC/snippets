@@ -34,5 +34,10 @@
         );
 
         register_post_type( 'articles', $args );
+
+        // register taxonomy
+	register_taxonomy('articles_category', 'articles', array('hierarchical' => true, 'label' => 'Category', 'query_var' => true, 'rewrite' => array('slug' => 'articles-category')));
+
+	register_taxonomy('articles_tags', 'articles', array('hierarchical' => true, 'label' => 'Tags', 'query_var' => true, 'rewrite' => array('slug' => 'articles-tags')));
     }
 ?>
