@@ -40,4 +40,6 @@
 
 	register_taxonomy('articles_tags', 'articles', array('hierarchical' => true, 'label' => 'Tags', 'query_var' => true, 'rewrite' => array('slug' => 'articles-tags')));
     }
+
+    add_action( 'init', 'article_init' );
 ?>
