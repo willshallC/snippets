@@ -32,5 +32,7 @@
                 'page-attributes'
             )
         );
+
+        register_post_type( 'articles', $args );
     }
 ?>
