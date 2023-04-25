@@ -25,3 +25,15 @@
                     </p>
                 </div>
             </div>
+            <div class="info-area info-horizontal">
+                <div class="icon icon-info">
+                    <i class="tim-icons icon-trophy"></i>
+                </div>
+                <div class="description">
+                    <h3 class="info-title">{{ __('Built Audience') }}</h3>
+                    <p class="description">
+                        {{ __('There is also a Fully Customizable CMS Admin Dashboard for this product.') }}
+                    </p>
+                </div>
+            </div>
+        </div>
