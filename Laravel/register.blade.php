@@ -97,3 +97,7 @@
                         <button type="submit" class="btn btn-primary btn-round btn-lg">{{ __('Get Started') }}</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+@endsection
