@@ -14,3 +14,14 @@
                     </p>
                 </div>
             </div>
+            <div class="info-area info-horizontal">
+                <div class="icon icon-primary">
+                    <i class="tim-icons icon-triangle-right-17"></i>
+                </div>
+                <div class="description">
+                    <h3 class="info-title">{{ __('Fully Coded in HTML5') }}</h3>
+                    <p class="description">
+                        {{ __('We\'ve developed the website with HTML5 and CSS3. The client has access to the code using GitHub.') }}
+                    </p>
+                </div>
+            </div>
