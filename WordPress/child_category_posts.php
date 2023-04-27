@@ -9,3 +9,9 @@
         ?>
             <div class="parent">
                 <h3 class="parent-cat" id=<?php echo $pcat->term_id; ?>><?php echo $pcat->name; ?></h3>
+                <div class="child-cat">
+                <?php
+                foreach($subcat as $sc){
+                    
+                
+                
