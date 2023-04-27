@@ -26,4 +26,28 @@
                     )
                   ) );
                   ?>
+
+<a href="<?echo get_category_link($sc->term_id)?>"><h2><?php echo $sc->name; echo $sc->term_id; ?></h2></a>
+                    
+                    <?php
+                    echo "<h1>$pcat->taxonomy</h1>";
+                        if($the_query->have_posts()){
+                            while($the_query->have_posts()){
+                                $the_query->the_post();
+                                ?>
+                                <p><?php echo get_the_title(); ?></p>
+                                <?php 
+                            }
+                            wp_reset_query();
+                        }
+                    ?>
+                
+                <?php } 
+        ?>
+            </div>
+        </div>   
+        
+   <?php }
+?>
+</div>
                 
