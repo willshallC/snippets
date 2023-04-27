@@ -13,5 +13,17 @@
                 <?php
                 foreach($subcat as $sc){
                     
-                
+                // Get posts from that child topic  
+                $the_query = new WP_Query( array(
+                    'post_type' => 'articles',
+                    'tax_query' => array(
+                      'relation' => 'AND',
+                      array(
+                        'taxonomy' => $pcat->taxonomy,
+                        'field'    => 'slug',
+                        'terms'    => array( $sc->slug )
+                      )
+                    )
+                  ) );
+                  ?>
                 
