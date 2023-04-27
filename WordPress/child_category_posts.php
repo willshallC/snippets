@@ -51,3 +51,22 @@
 ?>
 </div>
                 
+<style>
+    .child-cat{
+        display: none;
+    }
+</style>
+<script>
+    let childCat = document.querySelectorAll(".child-cat");
+    let parentCat = document.querySelectorAll(".parent-cat");
+
+    parentCat.forEach(p=>{
+        p.addEventListener('click',function(){
+            //this.nextSibling.style.display="block";
+            for(let x of childCat){
+                x.style.display="none";
+            }
+            this.nextElementSibling.style.display="block";
+        })
+    })
+</script>
