@@ -3,3 +3,8 @@
               <div class="selector-wrapper js product-form__item">
                 <label {% if option.name == 'default' %}class="label--hidden" {% endif %}for="SingleOptionSelector-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
                 <select class="single-option-selector single-option-selector-{{ section.id }} 
+                product-form__input"
+                  id="SingleOptionSelector-{{ forloop.index0 }}"
+                  data-name="{{ option.name }}"
+                  data-index="option{{ forloop.index }}">
+                  {% for value in option.values %}
