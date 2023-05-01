@@ -4,3 +4,7 @@ var formContents = available_ids[i].split('-');
                     if(formContents[2] != null){
                       var properties= {"_source":"Rebuy","_attribution":"Rebuy Tiered Progress Bar","_tier": formContents[2] };
                     }
+                    var data = {quantity:qty,id:id};
+                        if(properties != null){
+                            data.properties = properties;
+                        }
