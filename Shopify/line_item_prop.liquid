@@ -8,3 +8,16 @@ var formContents = available_ids[i].split('-');
                         if(properties != null){
                             data.properties = properties;
                         }
+                     var params = {
+                      type: 'POST',
+                      url: '/cart/add.js',
+                      data: data,
+                      dataType: 'json',
+                      success: function(line_item) {
+                        var iteration_length = i+1;
+                        //if iteration length is equal to the total length - it means that we have
+                        //   $(this).removeClass('bundle-cart-active');
+                        //   // document.location.href = '/checkout';
+                        //   // document.location.href = '/checkout?discount=test123';
+                        // }
+                      },
