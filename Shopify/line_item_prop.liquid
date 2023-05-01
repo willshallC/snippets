@@ -21,3 +21,8 @@ var formContents = available_ids[i].split('-');
                         //   // document.location.href = '/checkout?discount=test123';
                         // }
                       },
+                      error: function() {
+                          // console.log("fail");
+                    $(this).removeClass('bundle-cart-active');
+                      }
+                  };
