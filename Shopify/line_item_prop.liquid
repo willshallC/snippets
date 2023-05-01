@@ -1,0 +1,6 @@
+var formContents = available_ids[i].split('-');
+                    var qty = formContents[1];
+                    var id  = formContents[0];//variant_id
+                    if(formContents[2] != null){
+                      var properties= {"_source":"Rebuy","_attribution":"Rebuy Tiered Progress Bar","_tier": formContents[2] };
+                    }
