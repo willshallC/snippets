@@ -73,3 +73,48 @@
     }
     </script>
 </section>
+
+{% schema %}
+  {
+  "name": "Code In Shopify Section",
+  "settings": [],
+  "blocks": [
+    {
+      "name": "tabs",
+      "type": "tabs",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Tab Heading",
+          "placeholder": "Heading text",
+          "info": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text_description",
+          "label": "Text Description",
+          "info": "Description"
+        },
+          {
+          "type": "liquid",
+          "id": "content",
+          "label": "content",
+          "default": "content",
+          "info": "Liquid Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tab Description"
+    }
+  ]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+{% javascript %}
+{% endjavascript %}
