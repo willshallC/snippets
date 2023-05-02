@@ -33,3 +33,12 @@
     border-top: none;
     }
 </style>
+<div class="container">
+    <div class="tab">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'tabs' -%}
+          <button class="tablinks {% if forloop.first %} active {% endif %}" onclick="openCity(event, '{{ block.id }}')"> {{ block.settings.heading }}</button>
+        {%- endcase -%}
+    {%- endfor -%}
+    </div>
