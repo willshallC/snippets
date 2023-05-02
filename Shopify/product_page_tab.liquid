@@ -42,3 +42,17 @@
         {%- endcase -%}
     {%- endfor -%}
     </div>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'tabs' -%}
+          <div id="{{ block.id }}" class="tabcontent "  style="{% if forloop.first %} display : block; {% endif %}">
+            {% if block.settings.text_description != blank %}
+              {{ block.settings.text_description }}
+            {% endif  %}
+            {% if block.settings.content != blank %}
+              {{ block.settings.content }}
+            {% endif  %}
+          </div>
+        {%- endcase -%}
+    {%- endfor -%}
+    </div>
