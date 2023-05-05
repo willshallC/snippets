@@ -13,4 +13,5 @@
         }
         
     }
+    add_action( 'wp_head', 'count_post_visits' );
 ?>
