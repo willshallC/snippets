@@ -14,4 +14,18 @@
         
     }
     add_action( 'wp_head', 'count_post_visits' );
+
+
+    $popular_posts_args = array(
+        'posts_per_page' => 3,
+        'meta_key' => 'my_post_viewed',
+        'orderby' => 'meta_value_num',
+        'order'=> 'DESC'
+    );
+    $popular_posts_loop = new WP_Query( $popular_posts_args );
+      while( $popular_posts_loop->have_posts() ):
+        $popular_posts_loop->the_post();
+        // Loop continues
+    endwhile;
+    wp_reset_query();
 ?>
