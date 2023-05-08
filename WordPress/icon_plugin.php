@@ -8,3 +8,7 @@
         Author URI: https://dev.redefiningweb.com
         Version: 1.0
     */
+
+    if(!defined('ABSPATH')){
+        die;
+    }
