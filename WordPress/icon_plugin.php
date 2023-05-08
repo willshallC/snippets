@@ -52,3 +52,4 @@
             return $res;
         }
     }
+    add_filter('the_content','single_ikon');
