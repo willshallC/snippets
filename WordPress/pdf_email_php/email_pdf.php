@@ -118,4 +118,7 @@ $email_message .= "Content-Transfer-Encoding: base64\r\n";
 $email_message .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n";
 $email_message .= "\r\n".chunk_split(base64_encode($pdf_contents))."\r\n";
 $email_message .= "\r\n--PHP-mixed-".md5(time())."--";
+
+// Send the email
+mail($usermail,$usersubject,$email_message,$headers);   
 ?>
