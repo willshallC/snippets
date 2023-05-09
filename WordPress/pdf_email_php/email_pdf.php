@@ -94,4 +94,28 @@ $pdf->Cell(190, 5, 'phone_no', 0, 1, 'L');
 $pdf->Cell(190, 5, 'info@email.com', 0, 1, 'L');
 $pdf->Cell(190, 5, 'copyright', 0, 1, 'L');
 
+// Output PDF file
+$pdf->Output('invoice.pdf', 'F');
+            
+// Get the updated contents of the PDF file
+$pdf_contents = file_get_contents($filename);
+
+// Build the email message
+$email_message = "--PHP-mixed-".md5(time())."\r\n";
+$email_message .= "Content-Type: multipart/alternative; boundary=\"PHP-alt-".md5(time())."\"\r\n";
+$email_message .= "\r\n--PHP-alt-".md5(time())."\r\n";
+$email_message .= "Content-Type: text/plain; charset=\"iso-8859-1\"\r\n";
+$email_message .= "Content-Transfer-Encoding: 7bit\r\n";
+$email_message .= "\r\n".$usmessage."\r\n";
+$email_message .= "\r\n--PHP-alt-".md5(time())."\r\n";
+$email_message .= "Content-Type: text/html; charset=\"iso-8859-1\"\r\n";
+$email_message .= "Content-Transfer-Encoding: 7bit\r\n";
+$email_message .= "\r\n".$usmessage."\r\n";
+$email_message .= "\r\n--PHP-alt-".md5(time())."--\r\n";
+$email_message .= "\r\n--PHP-mixed-".md5(time())."\r\n";
+$email_message .= "Content-Type: application/pdf; name=\"".$filename."\"\r\n";
+$email_message .= "Content-Transfer-Encoding: base64\r\n";
+$email_message .= "Content-Disposition: attachment; filename=\"".$filename."\"\r\n";
+$email_message .= "\r\n".chunk_split(base64_encode($pdf_contents))."\r\n";
+$email_message .= "\r\n--PHP-mixed-".md5(time())."--";
 ?>
