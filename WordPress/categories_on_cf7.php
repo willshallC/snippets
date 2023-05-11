@@ -31,4 +31,6 @@
     
         return $customlist;
     }
+    //use this tag in your form
+    //[customlist your-cat]
 ?>
