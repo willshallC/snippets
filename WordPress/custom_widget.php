@@ -57,4 +57,8 @@ public function update( $new_instance, $old_instance ) {
      
     // Class wpb_widget ends here
     } 
+    // Register and load the widget
+function wpb_load_widget() {
+    register_widget( 'wpb_widget' );
+}
 ?>
