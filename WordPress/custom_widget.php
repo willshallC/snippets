@@ -61,4 +61,5 @@ public function update( $new_instance, $old_instance ) {
 function wpb_load_widget() {
     register_widget( 'wpb_widget' );
 }
+add_action( 'widgets_init', 'wpb_load_widget' );
 ?>
