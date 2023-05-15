@@ -69,4 +69,9 @@ function pp_pagination_nav(){
 
 }
 
+//we are using the pp_pagination_nav(); function to link the different split posts.
+//Place wherever it is necessary. Your choice.
+
+pp_pagination_nav();
+
 ?>
