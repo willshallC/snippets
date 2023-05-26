@@ -4,6 +4,7 @@
 
     get_header();
 ?>
+
 <section class="random-post-sec">
         <div class="custom-container">
             <div class="lastest-hadng">
@@ -53,6 +54,7 @@
         ?>
         </div>
     </section>
+    
 <?php
     get_footer();
 ?>
