@@ -7,3 +7,7 @@
 		)
 	);
 ?>
+<!--Where you want to display the widget, do this function-->
+<div class="sidebar">
+	<?php dynamic_sidebar('sidebar'); ?> 
+</div>
