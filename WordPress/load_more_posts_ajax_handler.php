@@ -1,3 +1,5 @@
+<!--add this code in functions file -->
+
 function load_more_posts_ajax_handler() {
     $page = $_POST['page'];
 
