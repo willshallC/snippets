@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	</head>
+	<body>
+
+	<h2>Filterable Table</h2>
+	
+	<input id="myInput" type="text" placeholder="Search"><br><br>
+	
+
+		<table border="1px" >
+		  <thead>
+		  <tr style="padding:10px 20px;">
+			<th>Firstname</th>
+			<th>Lastname</th>
+			<th>Email</th>
+		  </tr>
+		  </thead>
+		  <tbody id="myTable">
+		  <tr>
+			<td>Ravi</td>
+			<td>Thakur</td>
+			<td>ravi@gmail.com</td>
+		  </tr>
+		  <tr>
+			<td>Ayush</td>
+			<td>Kumar</td>
+			<td>ayush@gmail.com</td>
+		  </tr>
+		  <tr>
+			<td>Vicky</td>
+			<td>Obroi</td>
+			<td>vicky@gmail.com</td>
+		  </tr>
+		  <tr>
+			<td>Sahil</td>
+			<td>Sharma</td>
+			<td>sahil@gmail.com</td>
+		  </tr>
+		  </tbody>
+		</table>
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+		  jQuery("#myInput").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			jQuery("#myTable tr").filter(function() {
+			  jQuery(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		  });
+		});
+	</script>
+		
+	</body>
+</html>

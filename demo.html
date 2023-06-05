@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tooltip on Click</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <style>
+	#tooltip {
+	  position: absolute;
+	  background-color: #000;
+	  color: #fff;
+	  padding: 2px 4px;
+	  display: none;
+	  margin-top: 10px;
+	  display: none;
+	}
+
+  </style>
+</head>
+<body>
+  <button id="tooltip-button">Click</button>
+ 
+  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+  <div id="tooltip" class="hidden">
+ 
+	<p>This is a tooltip</p>
+	
+  </div>
+  
+  
+	
+  <script>
+	$(document).ready(function() {
+	  $("#tooltip-button").click(function() {
+		$("#tooltip").toggle();
+	  });
+	});
+  </script>
+</body>
+</html>
