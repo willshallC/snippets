@@ -68,6 +68,6 @@
     }
 });
 
-
+<?php get_footer(); ?>
 
 </script>
