@@ -31,3 +31,43 @@
 			'next_text'    => __('›'),
 		) ); ?>
 </div>
+<script>
+   jQuery(document).ready(function($) {
+    $(document).on('click', '#ajax-pagination a', function(e) {
+        e.preventDefault();
+
+        var page = $(this).attr('href');
+        loadPosts(page);
+    });
+
+    function loadPosts(page) {
+        $.ajax({
+            url: page,
+            type: 'get',
+            dataType: 'html',
+            beforeSend: function() {
+                // Display a loading spinner or message
+                jQuery('#ajax-posts-container').html('Loading...');
+            },
+            success: function(response) {
+                var postsContainer = $('#ajax-posts-container');
+                var paginationContainer = $('#ajax-pagination');
+                console.log(response);
+                // Replace the posts container with the new content
+                postsContainer.html($(response).find('#ajax-posts-container').html());
+
+                // Replace the pagination links
+                paginationContainer.html($(response).find('#ajax-pagination').html());
+
+                // Scroll to the top of the posts container
+                $('html, body').animate({
+                    scrollTop: postsContainer.offset().top - 100
+                }, 500);
+            }
+        });
+    }
+});
+
+
+
+</script>
