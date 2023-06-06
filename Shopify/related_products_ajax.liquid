@@ -1,0 +1,14 @@
+<script>
+    var nnn = {{product.metafields.pro.pro   | json}};
+    // console.log('nnn ',nnn);
+    var pro = "{{product.price | money}}";
+    // var toLoop = nnn.split('|');
+    $(nnn).each(function(index, value){
+     // console.log('value ',value);
+       jQuery.getJSON('/products/'+value+'.json', function(product) {
+        console.log('product : ',product.url, ' images',product.images[0], 'title', product.title );
+         $('.pro_desc.repro').addClass('testnigs');
+        $('.pro_desc.repro').append('<div class="fea_div"><p class="b-titleh4">Bestseller</p><a href="'+product.url+'"><img class="prod_image" src="'+product.images[0]+'" alt="Product Image"><p class="titlep">'+product.title+'</p><p class="pricefea">'+pro+'</p></a></div>');
+      } );
+    });
+</script>
