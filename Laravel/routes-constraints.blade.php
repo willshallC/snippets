@@ -30,4 +30,14 @@ Route::get('/post/{id?}',function($id=null){
     }
 })->whereAlpha('id');
 
+//for alpha numeric values
+Route::get('/post/{id?}',function($id=null){
+    if($id){
+        return "<h1>POST ID: $id</h1>";
+    }
+    else{
+        return "<h1>No POST ID</h1>";
+    }
+})->whereAlphaNumeric('id');
+
 ?>
