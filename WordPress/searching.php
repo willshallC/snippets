@@ -4,6 +4,22 @@
 	
  ?>
 
+<?php
+	$searchdata='';
+
+	if($_GET['title']!=""){
+		$searchdata=$_GET['title'];
+		
+	}
+?>
+
+<div class="searching">
+	<form method="get">
+		<input type="text" name="title" placeholder="Search By Name" value="<?php echo $_GET['title']; ?>"/>
+		<input type="submit" value="Search" name=""/>
+	</form>
+
+</div>
 
 <div class="post-grid">
 			
