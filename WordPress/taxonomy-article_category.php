@@ -3,10 +3,10 @@
 	$data=get_queried_object();
 	
 	
-	echo "<pre>";
+	/*echo "<pre>";
 	  print_r($data);
 	echo "</pre>";
-		
+		*/
 ?>
 
 <h2><?php echo $data->name ?></h2>
