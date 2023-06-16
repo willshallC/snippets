@@ -3,7 +3,24 @@
 <head>
     <title>JavaScript Calculator</title>
     <style>
-        
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            max-width: 200px;
+        }
+        .result {
+            grid-column: 1 / span 4;
+            text-align: right;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .button {
+            text-align: center;
+            padding: 10px;
+            background-color: #f8f8f8;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +46,19 @@
     </div>
 
     <script>
-      
+        function appendToResult(value) {
+            document.getElementById("result").innerHTML += value;
+        }
+
+        function clearResult() {
+            document.getElementById("result").innerHTML = '';
+        }
+
+        function calculate() {
+            var result = document.getElementById("result").innerHTML;
+            var calculatedResult = eval(result);
+            document.getElementById("result").innerHTML = calculatedResult;
+        }
     </script>
 </body>
 </html>
