@@ -1,0 +1,12 @@
+add_action( 'template_redirect','custom_redirect_to_mapped_domain', 10);
+function custom_redirect_to_mapped_domain(){
+	global $wp;
+	$url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	if(!is_admin() && strpos($url,'/nl') === false){
+		$status   = get_site_option( 'dm_301_redirect' ) ? '301' : '302'; // Honor status redirect option
+		$custom_url= home_url($wp->request);
+		
+		wp_safe_redirect($custom_url,$status);
+		exit;
+
+    }
