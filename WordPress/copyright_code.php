@@ -10,4 +10,9 @@
         }
         return $output;
     } 
+
+    //when you use the [your-message] mail tag in Contact Form 7, it will dynamically replace the [copyright_year] tag with the current year.
+    
+    Copyright © [copyright_year] Your Company Name. All rights reserved.    
 ?>
+
