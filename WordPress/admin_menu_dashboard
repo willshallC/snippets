@@ -8,13 +8,24 @@ function add_my_custom_menu(){
 		"add_new_function", // callback function
 		"dashicons-admin-plugins", // icon url
 		6 // positions
-	);
+	); 
 
-    add_submenu_page(
+	add_submenu_page(
 		"custom-plugin", //parent slug
 		"Add New", // page title
 		"Add New", // menu title
 		"manage_options", // capability = user_level access
 		"custom-plugin", // menu slug
 		"add_new_function" // callback function		
-	);
+	);	
+
+	add_submenu_page(
+		"custom-plugin", //parent slug
+		"All Pages", // page title
+		"All Pages", // menu title
+		"manage_options", // capability = user_level access
+		"All-Pages", // menu slug
+		"all_page_function" // callback function		
+	);	
+}
+add_action("admin_menu","add_my_custom_menu");
