@@ -1,0 +1,11 @@
+// add admin_menu in wordpress dashboard
+function add_my_custom_menu(){
+	add_menu_page(
+		"customplugin", // page title
+		"Custom plugin", // menu title
+		"manage_options", // admin level
+		"custom-plugin", // page slug
+		"add_new_function", // callback function
+		"dashicons-admin-plugins", // icon url
+		6 // positions
+	);
