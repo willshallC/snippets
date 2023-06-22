@@ -9,3 +9,12 @@ function add_my_custom_menu(){
 		"dashicons-admin-plugins", // icon url
 		6 // positions
 	);
+
+    add_submenu_page(
+		"custom-plugin", //parent slug
+		"Add New", // page title
+		"Add New", // menu title
+		"manage_options", // capability = user_level access
+		"custom-plugin", // menu slug
+		"add_new_function" // callback function		
+	);
