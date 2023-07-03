@@ -15,3 +15,20 @@ $args = array(
         )
      )
 );
+
+$featured_query = new WP_Query( $args );
+
+if ($featured_query->have_posts()) : 
+
+    while ($featured_query->have_posts()) : 
+
+        $featured_query->the_post();
+
+        $product = get_product( $featured_query->post->ID );
+
+        wc_get_template_part( 'content', 'product' );
+
+    endwhile;
+
+endif;
+wp_reset_query();
