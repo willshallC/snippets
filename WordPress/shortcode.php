@@ -14,22 +14,21 @@ function post_shortcode() {
 				'terms' => array('sports')
 			)						
 		),
-	);
-	
+	);	
 	$query = new WP_Query($args);
 	
 	ob_start();
 	if($query->have_posts()):
 	
 	?>
-	<ul>
-		<?php
-		while($query->have_posts()){
-			$query->the_post();			
-			echo '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a>'.get_the_content().'</li>';						
-		}
-		?>
-	</ul>
+        <ul>
+            <?php
+                while($query->have_posts()){
+                    $query->the_post();			
+                    echo '<li><a href="'.get_the_permalink().'">'.get_the_title().'</a>'.get_the_content().'</li>';						
+                }
+            ?>
+        </ul>
 	<?php
 	endif;
 	wp_reset_postdata();
