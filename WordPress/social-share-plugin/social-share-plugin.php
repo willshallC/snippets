@@ -7,6 +7,9 @@ Version: 1.0
 Author: Ravi 
 */
 
+?>
+
+<?php
 function social_share_menu_item(){
   add_submenu_page("options-general.php", "Social Share", "Social Share", "manage_options", "social-share", "social_share_page"); 
 }
@@ -31,18 +34,31 @@ function social_share_page(){
    <?php
 }
 
+//Social Sharing Settings
 function social_share_settings(){
     add_settings_section("social_share_config_section", "", null, "social-share");
  
-    add_settings_field("social-share-facebook", "Do you want to display Facebook share button?", "social_share_facebook_checkbox", "social-share", "social_share_config_section");
-    add_settings_field("social-share-twitter", "Do you want to display Twitter share button?", "social_share_twitter_checkbox", "social-share", "social_share_config_section");
-    add_settings_field("social-share-linkedin", "Do you want to display LinkedIn share button?", "social_share_linkedin_checkbox", "social-share", "social_share_config_section");
-    add_settings_field("social-share-reddit", "Do you want to display Reddit share button?", "social_share_reddit_checkbox", "social-share", "social_share_config_section");
+    add_settings_field("social-share-facebook", "Share With Facebook", "social_share_facebook_checkbox", "social-share", "social_share_config_section");
+    
+    add_settings_field("social-share-twitter", "Share With Twitter", "social_share_twitter_checkbox", "social-share", "social_share_config_section");
+    
+    add_settings_field("social-share-linkedin", "Share With LinkedIn", "social_share_linkedin_checkbox", "social-share", "social_share_config_section");
+    
+    add_settings_field("social-share-reddit", "Share With Reddit", "social_share_reddit_checkbox", "social-share", "social_share_config_section");
+    
+    add_settings_field("social-share-whatsapp", "Share With WhatsApp", "social_share_whatsapp_checkbox", "social-share", "social_share_config_section");
+
+    add_settings_field("social-share-instagram", "Share With Instagram", "social_share_instagram_checkbox", "social-share", "social_share_config_section");
+
+    add_settings_field("social-share-gmail", "Share With Mail", "social_share_gmail_checkbox", "social-share", "social_share_config_section");
  
     register_setting("social_share_config_section", "social-share-facebook");
     register_setting("social_share_config_section", "social-share-twitter");
     register_setting("social_share_config_section", "social-share-linkedin");
     register_setting("social_share_config_section", "social-share-reddit");
+    register_setting("social_share_config_section", "social-share-whatsapp");
+    register_setting("social_share_config_section", "social-share-instagram");
+    register_setting("social_share_config_section", "social-share-gmail");
 }
  
 function social_share_facebook_checkbox(){  
@@ -51,49 +67,96 @@ function social_share_facebook_checkbox(){
    <?php
 }
 
-function social_share_twitter_checkbox(){  
-   ?>
+function social_share_twitter_checkbox()
+{  
+  ?>
         <input type="checkbox" name="social-share-twitter" value="1" <?php checked(1, get_option('social-share-twitter'), true); ?> /> Check for Yes
    <?php
 }
 
-function social_share_linkedin_checkbox(){  
-   ?>
+function social_share_linkedin_checkbox()
+{  
+  ?>
         <input type="checkbox" name="social-share-linkedin" value="1" <?php checked(1, get_option('social-share-linkedin'), true); ?> /> Check for Yes
    <?php
 }
 
-function social_share_reddit_checkbox(){  
-   ?>
+function social_share_reddit_checkbox()
+{  
+?>
         <input type="checkbox" name="social-share-reddit" value="1" <?php checked(1, get_option('social-share-reddit'), true); ?> /> Check for Yes
+   <?php
+}
+
+function social_share_whatsapp_checkbox()
+{  
+  ?>
+        <input type="checkbox" name="social-share-whatsapp" value="1" <?php checked(1, get_option('social-share-whatsapp'), true); ?> /> Check for Yes
+   <?php
+}
+
+
+function social_share_instagram_checkbox()
+{  
+   ?>
+        <input type="checkbox" name="social-share-instagram" value="1" <?php checked(1, get_option('social-share-instagram'), true); ?> /> Check for Yes
+   <?php
+}
+
+
+function social_share_gmail_checkbox()
+{  
+  ?>
+        <input type="checkbox" name="social-share-gmail" value="1" <?php checked(1, get_option('social-share-gmail'), true); ?> /> Check for Yes
    <?php
 }
  
 add_action("admin_init", "social_share_settings");
 
+
 function add_social_share_icons($content){
-    $html = "<div class='social-share-wrapper'><div class='share-on'>Share on: </div>";
+    $html = "<br><div class='social-share-wrapper'><div class='share-on'></div>";
 
     global $post;
 
     $url = get_permalink($post->ID);
+	$title = $post->post_title;
     $url = esc_url($url);
+	//echo "<pre>";
+	//print_r($post);
+	//echo "</pre>";
 
-    if(get_option("social-share-facebook") == 1){
-        $html = $html . "<div class='facebook'><a target='_blank' href='http://www.facebook.com/sharer.php?u=" . $url . "'>Facebook</a></div>";
-    }
+if(get_option("social-share-facebook") == 1){
+  $html = $html . "<div class='facebook'><a target='_blank' href='http://www.facebook.com/sharer.php?u=" . $url . "'>Facebook</a></div>";
+}
 
-    if(get_option("social-share-twitter") == 1){
-        $html = $html . "<div class='twitter'><a target='_blank' href='https://twitter.com/share?url=" . $url . "'>Twitter</a></div>";
-    }
 
-    if(get_option("social-share-linkedin") == 1){
+if(get_option("social-share-twitter") == 1){
+  $html = $html . "<div class='twitter'><a target='_blank' href='https://twitter.com/share?text=". $title ."&url=" . $url . "'>Twitter</a></div>";
+}
+
+
+if(get_option("social-share-linkedin") == 1){
         $html = $html . "<div class='linkedin'><a target='_blank' href='http://www.linkedin.com/shareArticle?url=" . $url . "'>LinkedIn</a></div>";
     }
 
-    if(get_option("social-share-reddit") == 1){
+
+if(get_option("social-share-reddit") == 1){
         $html = $html . "<div class='reddit'><a target='_blank' href='http://reddit.com/submit?url=" . $url . "'>Reddit</a></div>";
     }
+
+
+if(get_option("social-share-whatsapp") == 1){
+	$html = $html . "<div class='whatsapp'><a target='_blank' href='https://api.whatsapp.com/send?text=" . $url . "'>WhatsApp</a></div>";
+}
+
+if(get_option("social-share-instagram") == 1){
+	$html = $html . "<div class='instagram'><a target='_blank' href='https://instagram.com/share?url=" . $url . "'>Instagram</a></div>";
+}
+
+if(get_option("social-share-gmail") == 1){
+	$html = $html . "<div class='gmail'><a target='_blank' href='mailto:?subject=Coupon" . $url . "'>Mail</a></div>";
+}
 
     $html = $html . "<div class='clear'></div></div>";
 
@@ -102,9 +165,12 @@ function add_social_share_icons($content){
 
 add_filter("the_content", "add_social_share_icons");
 
+
 function social_share_style() {
     wp_register_style("social-share-style-file", plugin_dir_url(__FILE__) . "style.css");
     wp_enqueue_style("social-share-style-file");
 }
 
 add_action("wp_enqueue_scripts", "social_share_style");
+
+?>
