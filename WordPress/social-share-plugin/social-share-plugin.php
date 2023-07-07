@@ -29,3 +29,23 @@ function social_share_page(){
       </div>
    <?php
 }
+
+function social_share_settings(){
+   add_settings_section("social_share_config_section", "", null, "social-share");
+
+   add_settings_field("social-share-facebook", "Do you want to display Facebook share button?", "social_share_facebook_checkbox", "social-share", "social_share_config_section");
+  
+   add_settings_field("social-share-twitter", "Do you want to display Twitter share button?", "social_share_twitter_checkbox", "social-share", "social_share_config_section");
+  
+   add_settings_field("social-share-linkedin", "Do you want to display LinkedIn share button?", "social_share_linkedin_checkbox", "social-share", "social_share_config_section");
+  
+  //////
+   add_settings_field("social-share-reddit", "Do you want to display Reddit share button?", "social_share_reddit_checkbox", "social-share", "social_share_config_section");
+
+   register_setting("social_share_config_section", "social-share-facebook");
+   register_setting("social_share_config_section", "social-share-twitter");
+   register_setting("social_share_config_section", "social-share-linkedin");
+  
+  //////
+   register_setting("social_share_config_section", "social-share-reddit");
+}
