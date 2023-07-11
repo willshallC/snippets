@@ -155,11 +155,11 @@ if(get_option("social-share-gmail") == 1){
 
 add_filter("the_content", "add_social_share_icons");
 
-function social_share_style() {
-    wp_register_style("social-share-style-file", plugin_dir_url(__FILE__) . "style.css");
-    wp_enqueue_style("social-share-style-file");
-}
 
+function social_share_style() {
+   wp_register_style("social-share-style-file", plugin_dir_url(__FILE__) . "style.css");
+   wp_enqueue_style("social-share-style-file");
+}
 add_action("wp_enqueue_scripts", "social_share_style");
 
 ?>
