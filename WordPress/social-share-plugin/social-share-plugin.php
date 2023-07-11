@@ -128,16 +128,13 @@ if(get_option("social-share-twitter") == 1){
   $html = $html . "<div class='twitter'><a target='_blank' href='https://twitter.com/share?text=". $title ."&url=" . $url . "'>Twitter</a></div>";
 }
 
-
 if(get_option("social-share-linkedin") == 1){
         $html = $html . "<div class='linkedin'><a target='_blank' href='http://www.linkedin.com/shareArticle?url=" . $url . "'>LinkedIn</a></div>";
     }
 
-
 if(get_option("social-share-reddit") == 1){
         $html = $html . "<div class='reddit'><a target='_blank' href='http://reddit.com/submit?url=" . $url . "'>Reddit</a></div>";
     }
-
 
 if(get_option("social-share-whatsapp") == 1){
 	$html = $html . "<div class='whatsapp'><a target='_blank' href='https://api.whatsapp.com/send?text=" . $url . "'>WhatsApp</a></div>";
