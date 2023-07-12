@@ -6,6 +6,7 @@ Description: Displays Social Share icons below every post
 Version: 1.0
 Author: Ravi 
 */
+
 ?>
 
 <?php
@@ -102,6 +103,7 @@ function social_share_instagram_checkbox()
    <?php
 }
 
+
 function social_share_gmail_checkbox()
 {  
   ?>
@@ -111,6 +113,7 @@ function social_share_gmail_checkbox()
  
 add_action("admin_init", "social_share_settings");
 
+
 function add_social_share_icons($content){
     $html = "<br><div class='social-share-wrapper'><div class='share-on'></div>";
 
@@ -119,22 +122,29 @@ function add_social_share_icons($content){
     $url = get_permalink($post->ID);
 	$title = $post->post_title;
     $url = esc_url($url);
+	//echo "<pre>";
+	//print_r($post);
+	//echo "</pre>";
 
 if(get_option("social-share-facebook") == 1){
   $html = $html . "<div class='facebook'><a target='_blank' href='http://www.facebook.com/sharer.php?u=" . $url . "'>Facebook</a></div>";
 }
 
+
 if(get_option("social-share-twitter") == 1){
   $html = $html . "<div class='twitter'><a target='_blank' href='https://twitter.com/share?text=". $title ."&url=" . $url . "'>Twitter</a></div>";
 }
+
 
 if(get_option("social-share-linkedin") == 1){
         $html = $html . "<div class='linkedin'><a target='_blank' href='http://www.linkedin.com/shareArticle?url=" . $url . "'>LinkedIn</a></div>";
     }
 
+
 if(get_option("social-share-reddit") == 1){
         $html = $html . "<div class='reddit'><a target='_blank' href='http://reddit.com/submit?url=" . $url . "'>Reddit</a></div>";
     }
+
 
 if(get_option("social-share-whatsapp") == 1){
 	$html = $html . "<div class='whatsapp'><a target='_blank' href='https://api.whatsapp.com/send?text=" . $url . "'>WhatsApp</a></div>";
@@ -156,10 +166,12 @@ if(get_option("social-share-gmail") == 1){
 add_filter("the_content", "add_social_share_icons");
 
 
+
 function social_share_style() {
-   wp_register_style("social-share-style-file", plugin_dir_url(__FILE__) . "style.css");
-   wp_enqueue_style("social-share-style-file");
+    wp_register_style("social-share-style-file", plugin_dir_url(__FILE__) . "style.css");
+    wp_enqueue_style("social-share-style-file");
 }
+
 add_action("wp_enqueue_scripts", "social_share_style");
 
 ?>
