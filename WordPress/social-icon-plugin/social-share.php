@@ -129,3 +129,90 @@ function social_icon_page() {
     </div>
     <?php
 }
+
+// Save form data to the database
+function social_share_save_data() {
+    if (isset($_POST['facebook_url']) && isset($_POST['instagram_url']) && isset($_POST['twitter_url']) && isset($_POST['linkedin_url'])) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'socialicons';
+        $facebook_url = sanitize_text_field($_POST['facebook_url']);
+        $instagram_url = sanitize_text_field($_POST['instagram_url']);
+        $twitter_url = sanitize_text_field($_POST['twitter_url']);
+        $linkedin_url = sanitize_text_field($_POST['linkedin_url']);
+
+        // Update existing URLs if they exist in the database
+        if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Facebook'")) {
+            $wpdb->update(
+                $table_name,
+                array('url' => $facebook_url),
+                array('title' => 'Facebook')
+            );
+        } else {
+            // Insert a new row for Facebook if it doesn't exist
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'title' => 'Facebook',
+                    'url' => $facebook_url
+                )
+            );
+        }
+
+        if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Instagram'")) {
+            $wpdb->update(
+                $table_name,
+                array('url' => $instagram_url),
+                array('title' => 'Instagram')
+            );
+        } else {
+            // Insert a new row for Instagram if it doesn't exist
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'title' => 'Instagram',
+                    'url' => $instagram_url
+                )
+            );
+        }
+
+        if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Twitter'")) {
+            $wpdb->update(
+                $table_name,
+                array('url' => $twitter_url),
+                array('title' => 'Twitter')
+            );
+        } else {
+            // Insert a new row for Twitter if it doesn't exist
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'title' => 'Twitter',
+                    'url' => $twitter_url
+                )
+            );
+        }
+		
+		if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Linkedin'")) {
+            $wpdb->update(
+                $table_name,
+                array('url' => $linkedin_url),
+                array('title' => 'Linkedin')
+            );
+        } else {
+            // Insert a new row for Twitter if it doesn't exist
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'title' => 'Linkedin',
+                    'url' => $linkedin_url
+                )
+            );
+        }
+
+        // Redirect back to the page with a success status
+        wp_redirect(admin_url('admin.php?page=social_icon_menu&status=success'));
+        exit;
+    }
+}
+
+add_action('admin_post_social_share_save_data', 'social_share_save_data');
