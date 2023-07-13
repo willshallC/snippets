@@ -32,3 +32,17 @@ function social_icons_activate() {
     dbDelta($sql);
 }
 register_activation_hook(__FILE__, 'social_icons_activate');
+
+// Add menu page in the WordPress dashboard
+function social_icon_menu() {
+    add_menu_page(
+        'Social Icons',
+        'Social Icons',
+        'manage_options',
+        'social_icon_menu',
+        'social_icon_page',
+        'dashicons-share',
+        20
+    );
+}
+add_action('admin_menu', 'social_icon_menu');
