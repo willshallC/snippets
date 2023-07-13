@@ -14,3 +14,21 @@ function enqueue_font_awesome() {
     wp_enqueue_style('social-icon', plugin_dir_url(__FILE__) . 'social-icon.css', array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
+
+// Create a table in the database when the plugin is activated
+function social_icons_activate() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'socialicons';
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        title VARCHAR(255) NOT NULL,
+        url VARCHAR(255) NOT NULL,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+register_activation_hook(__FILE__, 'social_icons_activate');
