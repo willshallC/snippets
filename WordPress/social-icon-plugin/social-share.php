@@ -216,3 +216,42 @@ function social_share_save_data() {
 }
 
 add_action('admin_post_social_share_save_data', 'social_share_save_data');
+
+
+// Create shortcode for social media icons
+function social_share_shortcode($atts) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'socialicons';
+
+    $links = $wpdb->get_results("SELECT title, url FROM $table_name");
+
+    $output = '';
+
+    foreach ($links as $link) {
+        if (!empty($link->url)) {
+            $icon_class = '';
+
+            // Assign icon classes based on the title
+            switch ($link->title) {
+                case 'Facebook':
+                    $icon_class = 'fab fa-facebook-f'; // Replace with the appropriate Font Awesome class
+                    break;
+                case 'Instagram':
+                    $icon_class = 'fab fa-instagram'; // Replace with the appropriate Font Awesome class
+                    break;
+                case 'Twitter':
+                    $icon_class = 'fab fa-twitter'; // Replace with the appropriate Font Awesome class
+                    break;
+                case 'Linkedin':
+                    $icon_class = 'fab fa-linkedin-in'; // Replace with the appropriate Font Awesome class
+                    break;
+                // Add more cases for other social media titles
+            }
+
+            $output .= '<a href="' . esc_url($link->url) . '" class="custom-social-icon '.$link->title.'"><i class="' . esc_attr($icon_class) . '"></i></a>';
+        }
+    }
+
+    return $output;
+}
+add_shortcode('social_share_icons', 'social_share_shortcode');
