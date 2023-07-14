@@ -3,9 +3,10 @@
 Plugin Name: Social Icons
 Description: Adds Social Media icon using shortcode anywhere.
 Version: 1.0
-Author: Ayush Kumar
- Author URI: https://www.willshall.com
+Author: Ayush Thakur
+Author URI: https://www.willshall.com
 */
+
 
 // Enqueue Font Awesome CSS, JS, and custom CSS files from CDN
 function enqueue_font_awesome() {
@@ -14,6 +15,7 @@ function enqueue_font_awesome() {
     wp_enqueue_style('social-icon', plugin_dir_url(__FILE__) . 'social-icon.css', array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'enqueue_font_awesome');
+
 
 // Create a table in the database when the plugin is activated
 function social_icons_activate() {
@@ -32,6 +34,7 @@ function social_icons_activate() {
     dbDelta($sql);
 }
 register_activation_hook(__FILE__, 'social_icons_activate');
+
 
 // Add menu page in the WordPress dashboard
 function social_icon_menu() {
@@ -130,6 +133,7 @@ function social_icon_page() {
     <?php
 }
 
+
 // Save form data to the database
 function social_share_save_data() {
     if (isset($_POST['facebook_url']) && isset($_POST['instagram_url']) && isset($_POST['twitter_url']) && isset($_POST['linkedin_url'])) {
@@ -214,7 +218,6 @@ function social_share_save_data() {
         exit;
     }
 }
-
 add_action('admin_post_social_share_save_data', 'social_share_save_data');
 
 
