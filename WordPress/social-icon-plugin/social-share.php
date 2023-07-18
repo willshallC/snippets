@@ -202,9 +202,7 @@ function save_data() {
                 )
             );
         }
-
-		
-		
+	
 	
 	
 	if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Whatsaap'")) {
@@ -224,7 +222,6 @@ function save_data() {
             );
         }
 		
-	
 		
 	if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Email'")) {
 		$wpdb->update(
@@ -242,8 +239,6 @@ function save_data() {
 			)
 		);
 	}
-
-
 
 
 	     
@@ -265,7 +260,6 @@ function save_data() {
         }
 		
 	
-		
 		if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Linkedin'")) {
             $wpdb->update(
                 $table_name,
@@ -291,7 +285,6 @@ function save_data() {
 add_action('admin_post_social_share_save_data', 'save_data');
 
 
-
 // Create shortcode for social media icons
 function shortcode($atts) {
     global $wpdb;
@@ -313,16 +306,14 @@ function shortcode($atts) {
                 case 'Instagram':
                     $icon_class = 'fab fa-instagram'; 
                     break;
-					
-					
+									
 				case 'Whatsaap':
                     $icon_class = 'fab fa-whatsapp'; 
                     break;
                 case 'Email':
                     $icon_class = 'far fa-envelope';
                     break;
-					
-					
+									
                 case 'Twitter':
                     $icon_class = 'fab fa-twitter'; 
                     break;
@@ -340,4 +331,3 @@ function shortcode($atts) {
     return $output;
 }
 add_shortcode('social_media_icons', 'shortcode');
-
