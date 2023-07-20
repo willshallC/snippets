@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Social Icons Plugin
+Plugin Name: Social Icons
 Description: Adds Social Media icon using shortcode
 Version: 1.0
 Author: Ravi Thakur
