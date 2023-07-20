@@ -15,4 +15,5 @@ if (sendEmail($recipient, $subject, $message)) {
 } else {
     echo "Failed to send the email. Please check your server configuration.";
 }
+
 ?>
