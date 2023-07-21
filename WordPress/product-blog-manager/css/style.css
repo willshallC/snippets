@@ -1,0 +1,20 @@
+.product-blog-manager-blog-dropdown {
+    width: 100%;
+}
+.assigned-blog {
+    flex: 0 0 auto;
+    width: calc(96% / 3);
+}
+
+@media screen and (max-width: 768px) {
+    .assigned-blog {
+        width: 50%;
+    }
+}
+
+.assigned-blogs-row {
+    display: flex;
+    width: 100%;
+    column-gap: 2%;
+    flex-wrap: wrap;
+}
