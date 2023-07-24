@@ -15,6 +15,7 @@ function product_blog_manager_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'product_blog_manager_enqueue_scripts' );
 
+
 // Enqueue stylesheets and scripts For Admin
 function product_blog_manager_enqueue_scripts_admin() {
     wp_enqueue_script( 'product-blog-manager-scripts', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery', 'select2' ), '', true );
