@@ -22,7 +22,6 @@ function product_blog_manager_enqueue_scripts_admin() {
 }
 add_action( 'admin_enqueue_scripts', 'product_blog_manager_enqueue_scripts_admin' );
 
-
 // Add a new meta box to the product editor screen
 function product_blog_manager_add_meta_box() {
     add_meta_box( 'product-blog-manager-meta-box', 'Product Blog Manager', 'product_blog_manager_meta_box_content', 'product', 'normal', 'high' );
