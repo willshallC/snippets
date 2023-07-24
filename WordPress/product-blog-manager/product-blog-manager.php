@@ -28,6 +28,7 @@ function product_blog_manager_add_meta_box() {
 }
 add_action( 'add_meta_boxes', 'product_blog_manager_add_meta_box' );
 
+
 // Display the content of the meta box
 function product_blog_manager_meta_box_content( $post ) {
     // Retrieve the assigned blogs for the product
