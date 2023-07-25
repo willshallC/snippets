@@ -78,6 +78,7 @@ function product_blog_manager_save_meta_box( $post_id ) {
 
 add_action( 'save_post', 'product_blog_manager_save_meta_box' );
 
+
 // Display the assigned blogs on the product page
 function product_blog_manager_display_assigned_blogs() {
     global $product;
@@ -130,8 +131,7 @@ function product_blog_manager_display_assigned_blogs() {
         
         if ( $row_open ) {
             echo '</div>'; // Close the last row
-        }
-        
+        }     
         echo '</div>';
         echo '</div>';
     }
