@@ -75,6 +75,7 @@ function product_blog_manager_save_meta_box( $post_id ) {
     
     update_post_meta( $post_id, '_assigned_blogs', $assigned_blogs );
 }
+
 add_action( 'save_post', 'product_blog_manager_save_meta_box' );
 
 // Display the assigned blogs on the product page
