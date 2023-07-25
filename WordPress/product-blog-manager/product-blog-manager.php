@@ -54,7 +54,6 @@ function product_blog_manager_meta_box_content( $post ) {
     wp_nonce_field( 'product_blog_manager_save_meta_box', 'product_blog_manager_nonce' );
 }
 
-
 // Save the meta box content
 function product_blog_manager_save_meta_box( $post_id ) {
     // Check if the current user is authorized to save the post
