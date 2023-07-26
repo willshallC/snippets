@@ -54,6 +54,7 @@ function product_blog_manager_meta_box_content( $post ) {
     wp_nonce_field( 'product_blog_manager_save_meta_box', 'product_blog_manager_nonce' );
 }
 
+
 // Save the meta box content
 function product_blog_manager_save_meta_box( $post_id ) {
     // Check if the current user is authorized to save the post
@@ -61,7 +62,7 @@ function product_blog_manager_save_meta_box( $post_id ) {
         return;
     }
     
-    // Verify the nonce field
+    // Verify the nonce field 
     if ( ! isset( $_POST['product_blog_manager_nonce'] ) || ! wp_verify_nonce( $_POST['product_blog_manager_nonce'], 'product_blog_manager_save_meta_box' ) ) {
         return;
     }
@@ -79,7 +80,7 @@ function product_blog_manager_save_meta_box( $post_id ) {
 add_action( 'save_post', 'product_blog_manager_save_meta_box' );
 
 
-// Display the assigned blogs on the product page
+// Display the assigned blogs on the product page 
 function product_blog_manager_display_assigned_blogs() {
     global $product;
     
@@ -137,3 +138,4 @@ function product_blog_manager_display_assigned_blogs() {
     }
 }
 add_action( 'woocommerce_after_single_product_summary', 'product_blog_manager_display_assigned_blogs', 30 );
+
