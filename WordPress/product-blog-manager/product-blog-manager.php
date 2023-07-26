@@ -9,6 +9,7 @@
  * License: GPL2
  */
 
+
 // Enqueue stylesheets and scripts
 function product_blog_manager_enqueue_scripts() {
     wp_enqueue_style( 'product-blog-manager-styles', plugin_dir_url( __FILE__ ) . 'css/style.css' );
@@ -138,4 +139,3 @@ function product_blog_manager_display_assigned_blogs() {
     }
 }
 add_action( 'woocommerce_after_single_product_summary', 'product_blog_manager_display_assigned_blogs', 30 );
-
