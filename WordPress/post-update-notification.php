@@ -5,6 +5,7 @@ function send_post_update_notification($new_status, $old_status, $post) {
     // Check if the post status is transitioning from 'publish' to 'publish'
     
     if ($old_status === 'publish' && $new_status === 'publish' && !wp_is_post_revision($post)) {
+       
         // Email subject and message
         $subject = 'Post Updated: ' . $post->post_title;
         $message = 'The following post has been updated on your website:' . "\n\n";
