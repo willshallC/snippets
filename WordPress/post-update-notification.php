@@ -16,8 +16,7 @@ function send_post_update_notification($new_status, $old_status, $post) {
         $admin_email = get_option('admin_email'); 
         // Send the email to the admin
         wp_mail($admin_email, $subject, $message);
-    }
-    
+    } 
 }
 
 add_action('transition_post_status', 'send_post_update_notification', 10, 3);
