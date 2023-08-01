@@ -4,31 +4,42 @@
     <title>Read More Button</title>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum. <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum.<span id="dots" class="dots">...</span> <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
     <span class="readMoreButton">Read More</span>
 	
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum. <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum. <span id="dots" class="dots">...</span><span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
     <span class="readMoreButton">Read More</span>
 	
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum. <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum.<span id="dots" class="dots">...</span> <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
     <span class="readMoreButton">Read More</span>
 
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum.<span id="dots" class="dots">...</span> <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
+    <span class="readMoreButton">Read More</span>
+	
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla orci eu lectus placerat, sit amet consequat purus gravida. Suspendisse id nisi vel nisi faucibus congue. Vivamus fermentum risus et odio ullamcorper, et commodo libero dictum.<span id="dots" class="dots">...</span> <span class="moreContent" style="display:none;">Pellentesque eu nibh ut ex consectetur euismod id eu orci. Vestibulum elementum ipsum quis mauris euismod, a consectetur odio cursus. Vivamus elementum enim eget purus dignissim, nec gravida quam aliquet. Donec egestas ex ac nunc malesuada, eget pharetra mauris volutpat.</span></p>
+    <span class="readMoreButton">Read More</span>
+    
     <script>
+        
         // Get all the "Read More" buttons and add click event listeners to each
         var readMoreButtons = document.querySelectorAll(".readMoreButton");
         readMoreButtons.forEach(function(button) {
             button.addEventListener("click", function() {
                 var moreContent = button.previousElementSibling.querySelector(".moreContent");
+				var dotc = button.previousElementSibling.querySelector(".dots");
                 if (moreContent.style.display === "none") {
                     moreContent.style.display = "inline";
                     button.textContent = "Read Less";
+					dotc.style.display = "none";
                 } else {
                     moreContent.style.display = "none";
                     button.textContent = "Read More";
+					dotc.style.display = "inline";
                 }
             });
         });
+
     </script>
-	
+    
 </body>
 </html>
