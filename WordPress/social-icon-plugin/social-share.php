@@ -236,9 +236,7 @@ function save_data() {
 			)
 		);
 	}
-
-
-	     
+ 
 	   if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Twitter'")) {
             $wpdb->update(
                 $table_name,
@@ -256,7 +254,6 @@ function save_data() {
             );
         }
 		
-	
 		if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Linkedin'")) {
             $wpdb->update(
                 $table_name,
@@ -280,7 +277,6 @@ function save_data() {
     }
 }
 add_action('admin_post_social_share_save_data', 'save_data');
-
 
 // Create shortcode for social media icons
 function shortcode($atts) {
