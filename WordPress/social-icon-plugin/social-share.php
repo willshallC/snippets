@@ -7,7 +7,6 @@ Author: Ravi Thakur
 Author URI: https://ravi.redefiningweb.com/
 */
 
-
 // Enqueue Font Awesome CSS, JS, and custom CSS files from CDN
 function enqueue_font_awesome_file() {
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css', array(), '5.15.3');
@@ -15,7 +14,6 @@ function enqueue_font_awesome_file() {
     wp_enqueue_style('social-icon', plugin_dir_url(__FILE__) . 'social-share.css', array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'enqueue_font_awesome_file');
-
 
 // Create a table in the database when the plugin is activated
 function social_icon_activate() {
@@ -155,7 +153,6 @@ function social_icons_page() {
     </div>
     <?php
 }
-
 // Save form data to the database
 function save_data() {
     if (isset($_POST['facebook_url']) && isset($_POST['instagram_url']) /*&& isset($_POST['twitter_url']) && isset($_POST['linkedin_url']) */) {
@@ -204,7 +201,7 @@ function save_data() {
         }
 	
 	
-	
+
 	if ($wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE title = 'Whatsaap'")) {
             $wpdb->update(
                 $table_name,
