@@ -35,6 +35,7 @@ function custom_woocommerce_discounts_page_callback() {
         update_option('product_discount_category_percentage', $category_discounts);
     }
 
+    
     // Get the saved global discount percentage, flat rate, and category-specific discounts from the database
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
