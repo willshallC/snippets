@@ -91,7 +91,6 @@ function custom_display_discounted_price($price, $product) {
     $regular_price = $product->get_regular_price();
 
 
-
 // Check if the product is a simple product
 if ($product->is_type('simple')) {
     if ($product->is_on_sale()) {
@@ -101,7 +100,6 @@ if ($product->is_type('simple')) {
         echo wc_price($product->get_regular_price());
     }
 }
-
 
 
     // Calculate the maximum category-specific discount for the current product
