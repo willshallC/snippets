@@ -168,4 +168,5 @@ if ($product->is_type('simple')) {
     // For simple products or non-discounted variable products, return the regular discounted price
     return wc_price($discounted_price);
 }
+
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
