@@ -166,8 +166,8 @@ if ($product->is_type('simple')) {
         return wc_format_price_range($min_discounted_price, $max_discounted_price);
     }
 
-    
     // For simple products or non-discounted variable products, return the regular discounted price
+   
     return wc_price($discounted_price);
 }
 
