@@ -101,7 +101,6 @@ if ($product->is_type('simple')) {
     }
 }
 
-
     // Calculate the maximum category-specific discount for the current product
     $max_category_discount = 0;
     $product_categories = wp_get_post_terms($product->get_id(), 'product_cat', array('fields' => 'ids'));
@@ -166,9 +165,8 @@ if ($product->is_type('simple')) {
         return wc_format_price_range($min_discounted_price, $max_discounted_price);
     }
 
-    // For simple products or non-discounted variable products, return the regular discounted price
-   
+    // For simple products or non-discounted variable products, return the regular discounted price 
     return wc_price($discounted_price);
 }
-
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
+
