@@ -7,6 +7,7 @@ Version: 1.0
 Author: Ravi 
 */
 
+
 // Add a sub-menu under the "WooCommerce" menu
 function custom_woocommerce_discounts_submenu() {
     add_submenu_page(
@@ -140,7 +141,7 @@ if ($product->is_type('simple')) {
             $regular_variation_price = $variation->get_regular_price();
             $sale_variation_price = $variation->get_sale_price();
 
-            
+
             // Calculate the discounted price for each variation
             if ($max_discount > 0) {
                 if ($sale_variation_price && $sale_variation_price !== $regular_variation_price) {
@@ -158,7 +159,6 @@ if ($product->is_type('simple')) {
             $variation_prices[] = $discounted_variation_price;
         }
 
-
         // Calculate the minimum and maximum discounted prices for variations
         $min_discounted_price = min($variation_prices);
         $max_discounted_price = max($variation_prices);
@@ -170,4 +170,3 @@ if ($product->is_type('simple')) {
     return wc_price($discounted_price);
 }
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
-
