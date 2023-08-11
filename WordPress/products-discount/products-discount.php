@@ -140,6 +140,7 @@ if ($product->is_type('simple')) {
             $regular_variation_price = $variation->get_regular_price();
             $sale_variation_price = $variation->get_sale_price();
 
+            
             // Calculate the discounted price for each variation
             if ($max_discount > 0) {
                 if ($sale_variation_price && $sale_variation_price !== $regular_variation_price) {
