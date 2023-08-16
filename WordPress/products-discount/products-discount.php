@@ -97,10 +97,11 @@ if ($product->is_type('simple')) {
     if ($product->is_on_sale()) {
         echo '<del>' . wc_price($product->get_regular_price()) . '</del>';
         echo '<ins>' . wc_price($product->get_sale_price()) . '</ins>';
-    } else {
+    }else{
         echo wc_price($product->get_regular_price());
     }
 }
+
 
     // Calculate the maximum category-specific discount for the current product
     $max_category_discount = 0;
