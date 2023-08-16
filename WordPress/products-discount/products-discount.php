@@ -141,7 +141,6 @@ if ($product->is_type('simple')) {
             $regular_variation_price = $variation->get_regular_price();
             $sale_variation_price = $variation->get_sale_price();
 
-
             // Calculate the discounted price for each variation
             if ($max_discount > 0) {
                 if ($sale_variation_price && $sale_variation_price !== $regular_variation_price) {
@@ -169,4 +168,6 @@ if ($product->is_type('simple')) {
     // For simple products or non-discounted variable products, return the regular discounted price 
     return wc_price($discounted_price);
 }
+
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
+
