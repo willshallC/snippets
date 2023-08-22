@@ -7,7 +7,6 @@ Version: 1.0
 Author: Ravi 
 */
 
-
 // Add a sub-menu under the "WooCommerce" menu
 function custom_woocommerce_discounts_submenu() {
     add_submenu_page(
@@ -82,7 +81,6 @@ function custom_woocommerce_discounts_page_callback() {
 }
 
 
-
 function custom_display_discounted_price($price, $product) {
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
@@ -92,8 +90,6 @@ function custom_display_discounted_price($price, $product) {
     $has_sale_price = $product->get_sale_price();
     $regular_price = $product->get_regular_price();
 	
-	
-
 
 // Calculate the discounted price based on the flat rate discount
 // Check if the product is a simple product
@@ -116,7 +112,6 @@ if ($product->is_type('simple'))  {
 }
 	
 	
-
     // Calculate the maximum category-specific discount for the current product
     $max_category_discount = 0;
     $product_categories = wp_get_post_terms($product->get_id(), 'product_cat', array('fields' => 'ids'));
@@ -154,7 +149,6 @@ if ($product->is_type('simple'))  {
 
         // Ensure the discounted price doesn't go below zero
         $discounted_price = max(0, $discounted_price);
-
 
 
 // For variable products, return the minimum and maximum discounted price range
