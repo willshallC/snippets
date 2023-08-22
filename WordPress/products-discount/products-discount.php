@@ -187,8 +187,7 @@ if ($product->is_type('simple'))  {
         }
 
         // For simple products or non-discounted variable products, return the sale price and the discounted price
-        return sprintf('%s <ins>%s</ins>', wc_price($has_sale_price), wc_price($discounted_price));
-	
+        return sprintf('%s <ins>%s</ins>', wc_price($has_sale_price), wc_price($discounted_price));	
 	
     }
 
