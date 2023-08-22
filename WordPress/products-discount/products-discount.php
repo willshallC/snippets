@@ -24,7 +24,7 @@ add_action('admin_menu', 'custom_woocommerce_discounts_submenu');
 
 function custom_woocommerce_discounts_page_callback() {
     // Check if the form is submitted
-    if (isset($_POST['submit'])) {
+	if (isset($_POST['submit'])) {
         // Save the global discount percentage, flat rate, and category-specific discounts in the database
         $global_discount_percentage = floatval($_POST['global_discount_percentage']);
         $flat_rate_discount = floatval($_POST['flat_rate_discount']);
@@ -34,9 +34,9 @@ function custom_woocommerce_discounts_page_callback() {
 
         $category_discounts = $_POST['category_discount'];
         update_option('product_discount_category_percentage', $category_discounts);
-    }
+    } 
 
-    
+
     // Get the saved global discount percentage, flat rate, and category-specific discounts from the database
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
@@ -81,7 +81,8 @@ function custom_woocommerce_discounts_page_callback() {
     echo '</div>';
 }
 
-// Display the discounted price on the product page
+
+
 function custom_display_discounted_price($price, $product) {
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
@@ -90,18 +91,31 @@ function custom_display_discounted_price($price, $product) {
     // Check if the product has a sale price
     $has_sale_price = $product->get_sale_price();
     $regular_price = $product->get_regular_price();
+	
+	
 
 
+// Calculate the discounted price based on the flat rate discount
 // Check if the product is a simple product
-if ($product->is_type('simple')) {
-    if ($product->is_on_sale()) {
-        echo '<del>' . wc_price($product->get_regular_price()) . '</del>';
-        echo '<ins>' . wc_price($product->get_sale_price()) . '</ins>';
-    }else{
-        echo wc_price($product->get_regular_price());
-    }
-}
+if ($product->is_type('simple'))  {
+	if ($has_sale_price && $has_sale_price !== $regular_price) {
+		// Apply the flat rate discount to the sale price
+		$discounted_price = $has_sale_price - $flat_rate_discount;
+	} else {
+		// Apply the flat rate discount to the regular price
+		$discounted_price = $regular_price - $flat_rate_discount;
+	}
 
+	// Calculate the difference
+	$price_difference = $has_sale_price - $discounted_price;
+
+	// Display the price difference
+	if ($price_difference > 0) {
+		echo '<p class="price-difference">' . sprintf(__('Save: %s', 'your-text-domain'), wc_price($price_difference)) . '</p>';
+	}
+}
+	
+	
 
     // Calculate the maximum category-specific discount for the current product
     $max_category_discount = 0;
@@ -116,59 +130,127 @@ if ($product->is_type('simple')) {
     // Calculate the maximum discount (percentage-based or flat rate) applicable to the product
     $max_discount = max($global_discount_percentage, $max_category_discount);
 
-    // Calculate the discounted price based on the maximum discount
-    if ($max_discount > 0) {
-        if ($has_sale_price && $has_sale_price !== $regular_price) {
-            // Apply the percentage-based discount to the sale price
-            $discounted_price = $has_sale_price - ($has_sale_price * ($max_discount / 100));
-        } else {
-            // Apply the percentage-based discount to the regular price
-            $discounted_price = $regular_price - ($regular_price * ($max_discount / 100));
-        }
-    } else {
-        // No percentage-based discount, apply the flat rate discount if applicable
-        $discounted_price = $regular_price - $flat_rate_discount;
-    }
-
-    // Ensure the discounted price doesn't go below zero
-    $discounted_price = max(0, $discounted_price);
-
-    // For variable products, calculate the minimum and maximum discounted prices among variations
-    if ($product->is_type('variable')) {
-        $variation_prices = array();
-
-        foreach ($product->get_available_variations() as $variation_data) {
-            $variation = wc_get_product($variation_data['variation_id']);
-            $regular_variation_price = $variation->get_regular_price();
-            $sale_variation_price = $variation->get_sale_price();
-
-            // Calculate the discounted price for each variation
-            if ($max_discount > 0) {
-                if ($sale_variation_price && $sale_variation_price !== $regular_variation_price) {
-                    $discounted_variation_price = $sale_variation_price - ($sale_variation_price * ($max_discount / 100));
-                } else {
-                    $discounted_variation_price = $regular_variation_price - ($regular_variation_price * ($max_discount / 100));
-                }
+    // Check if any discount is applicable
+    if ($max_discount > 0 || $flat_rate_discount > 0) {
+        // Calculate the discounted price based on the maximum discount
+        if ($max_discount > 0) {
+            if ($has_sale_price && $has_sale_price !== $regular_price) {
+                // Apply the percentage-based discount to the sale price
+                $discounted_price = $has_sale_price - ($has_sale_price * ($max_discount / 100));
             } else {
-                $discounted_variation_price = $regular_variation_price - $flat_rate_discount;
+                // Apply the percentage-based discount to the regular price
+                $discounted_price = $regular_price - ($regular_price * ($max_discount / 100));
             }
-
-            // Ensure the discounted variation price doesn't go below zero
-            $discounted_variation_price = max(0, $discounted_variation_price);
-
-            $variation_prices[] = $discounted_variation_price;
+        } else {
+            // No percentage-based discount, apply the flat rate discount if applicable
+            if ($has_sale_price && $has_sale_price !== $regular_price) {
+                // Apply the flat rate discount to the sale price
+                $discounted_price = $has_sale_price - $flat_rate_discount;
+            } else {
+                // Apply the flat rate discount to the regular price
+                $discounted_price = $regular_price - $flat_rate_discount;
+            }
         }
 
-        // Calculate the minimum and maximum discounted prices for variations
-        $min_discounted_price = min($variation_prices);
-        $max_discounted_price = max($variation_prices);
+        // Ensure the discounted price doesn't go below zero
+        $discounted_price = max(0, $discounted_price);
 
-        return wc_format_price_range($min_discounted_price, $max_discounted_price);
+
+
+// For variable products, return the minimum and maximum discounted price range
+        if ($product->is_type('variable')) {
+            $variation_prices = array();
+
+            foreach ($product->get_available_variations() as $variation_data) {
+                $variation = wc_get_product($variation_data['variation_id']);
+                $sale_variation_price = $variation->get_sale_price();
+                $regular_variation_price = $variation->get_regular_price();
+
+                if ($max_discount > 0) {
+                    if ($sale_variation_price && $sale_variation_price !== $regular_variation_price) {
+                        $discounted_variation_price = $sale_variation_price - ($sale_variation_price * ($max_discount / 100));
+                    } else {
+                        $discounted_variation_price = $regular_variation_price - ($regular_variation_price * ($max_discount / 100));
+                    }
+                } else {
+                    $discounted_variation_price = $regular_variation_price - $flat_rate_discount;
+                }
+
+                $variation_prices[] = $discounted_variation_price;
+            }
+			
+            // Calculate the minimum and maximum discounted prices for variations
+            $min_discounted_price = min($variation_prices);
+            $max_discounted_price = max($variation_prices);
+
+            return wc_format_price_range($min_discounted_price, $max_discounted_price);
+        }
+
+        // For simple products or non-discounted variable products, return the sale price and the discounted price
+        return sprintf('%s <ins>%s</ins>', wc_price($has_sale_price), wc_price($discounted_price));
+	
+	
     }
 
-    // For simple products or non-discounted variable products, return the regular discounted price 
-    return wc_price($discounted_price);
+    // No discount is applicable, show the default WooCommerce behavior
+    return $price;
 }
-
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
 
+
+// Make sure the discounted price is sent to the cart for eligible products
+function custom_set_cart_item_price($cart_object) {
+    $global_discount_percentage = get_option('product_discount_global_percentage', 0);
+    $flat_rate_discount = get_option('product_discount_flat_rate', 0);
+    $category_discounts = get_option('product_discount_category_percentage', array());
+
+    foreach ($cart_object->cart_contents as $cart_item_key => $cart_item) {
+        $product = $cart_item['data'];
+
+        // Check if the product has a sale price
+        $has_sale_price = $product->get_sale_price();
+        $regular_price = $product->get_regular_price();
+
+        // Calculate the maximum category-specific discount for the current product
+        $max_category_discount = 0;
+        $product_categories = wp_get_post_terms($product->get_id(), 'product_cat', array('fields' => 'ids'));
+
+        foreach ($product_categories as $category_id) {
+            if (isset($category_discounts[$category_id])) {
+                $max_category_discount = max($max_category_discount, floatval($category_discounts[$category_id]));
+            }
+        }
+
+        // Calculate the maximum discount (percentage-based or flat rate) applicable to the product
+        $max_discount = max($global_discount_percentage, $max_category_discount);
+
+        // Calculate the discounted price based on the maximum discount
+        if ($max_discount > 0) {
+            if ($has_sale_price && $has_sale_price !== $regular_price) {
+                // Apply the percentage-based discount to the sale price
+                $discounted_price = $has_sale_price - ($has_sale_price * ($max_discount / 100));
+            } else {
+                // Apply the percentage-based discount to the regular price
+                $discounted_price = $regular_price - ($regular_price * ($max_discount / 100));
+            }
+        } else {
+            // No percentage-based discount, apply the flat rate discount if applicable
+            if ($has_sale_price && $has_sale_price !== $regular_price) {
+                // Apply the flat rate discount to the sale price
+                $discounted_price = $has_sale_price - $flat_rate_discount;
+            } else {
+                // Apply the flat rate discount to the regular price
+                $discounted_price = $regular_price - $flat_rate_discount;
+            }
+        }
+
+        // Ensure the discounted price doesn't go below zero
+        $discounted_price = max(0, $discounted_price);
+
+        // Set the discounted price only for eligible products
+        if ($product->is_type('simple') || $product->is_type('variation')) {
+            $cart_item['data']->set_price($discounted_price);
+        }
+    }
+}
+add_action('woocommerce_before_calculate_totals', 'custom_set_cart_item_price');
