@@ -95,33 +95,58 @@ function custom_display_discounted_price($price, $product) {
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
     $category_discounts = get_option('product_discount_category_percentage', array());
+    $category_flat_rate_discounts = get_option('product_category_flat_rate_discounts', array());
 
     // Check if the product has a sale price
     $has_sale_price = $product->get_sale_price();
     $regular_price = $product->get_regular_price();
-	
 
-// Calculate the discounted price based on the flat rate discount
-// Check if the product is a simple product
+
+
+// Calculate the total discount amount based on all applied discounts
 if ($product->is_type('simple'))  {
+
+$total_discount = 0;
+
+// Calculate the discount based on the global percentage discount
+if ($global_discount_percentage > 0) {
 	if ($has_sale_price && $has_sale_price !== $regular_price) {
-		// Apply the flat rate discount to the sale price
-		$discounted_price = $has_sale_price - $flat_rate_discount;
+		$total_discount += ($has_sale_price * ($global_discount_percentage / 100));
 	} else {
-		// Apply the flat rate discount to the regular price
-		$discounted_price = $regular_price - $flat_rate_discount;
-	}
-
-	// Calculate the difference
-	$price_difference = $has_sale_price - $discounted_price;
-
-	// Display the price difference
-	if ($price_difference > 0) {
-		echo '<p class="price-difference">' . sprintf(__('Save: %s', 'your-text-domain'), wc_price($price_difference)) . '</p>';
+		$total_discount += ($regular_price * ($global_discount_percentage / 100));
 	}
 }
-	
-	
+
+// Calculate the discount based on the flat rate discount
+if ($has_sale_price && $has_sale_price !== $regular_price) {
+	$total_discount += $flat_rate_discount;
+} else {
+	$total_discount += $flat_rate_discount;
+}
+
+// Calculate the discount for category discounts
+foreach ($product_categories as $category_id) {
+	if (isset($category_discounts[$category_id])) {
+		$category_discount_percentage = floatval($category_discounts[$category_id]);
+		$category_discount = 0;
+		if ($category_discount_percentage > 0) {
+			if ($has_sale_price && $has_sale_price !== $regular_price) {
+				$category_discount = ($has_sale_price * ($category_discount_percentage / 100));
+			} else {
+				$category_discount = ($regular_price * ($category_discount_percentage / 100));
+			}
+		}
+		$total_discount += $category_discount;
+	}
+}
+
+// Display the total discount amount
+if ($total_discount > 0) {
+	echo '<p class="total-discount">' . sprintf(__('You Save: %s', 'your-text-domain'), wc_price($total_discount)) . '</p>';
+}
+}
+
+
     // Calculate the maximum category-specific discount for the current product
     $max_category_discount = 0;
     $product_categories = wp_get_post_terms($product->get_id(), 'product_cat', array('fields' => 'ids'));
@@ -132,11 +157,20 @@ if ($product->is_type('simple'))  {
         }
     }
 
+    // Check if the product is eligible for flat rate category discount
+    $eligible_for_category_discount = false;
+    foreach ($product_categories as $category_id) {
+        if (isset($category_flat_rate_discounts[$category_id])) {
+            $eligible_for_category_discount = true;
+            break;
+        }
+    }
+
     // Calculate the maximum discount (percentage-based or flat rate) applicable to the product
     $max_discount = max($global_discount_percentage, $max_category_discount);
 
     // Check if any discount is applicable
-    if ($max_discount > 0 || $flat_rate_discount > 0) {
+    if ($max_discount > 0 || $eligible_for_category_discount) {
         // Calculate the discounted price based on the maximum discount
         if ($max_discount > 0) {
             if ($has_sale_price && $has_sale_price !== $regular_price) {
@@ -160,8 +194,17 @@ if ($product->is_type('simple'))  {
         // Ensure the discounted price doesn't go below zero
         $discounted_price = max(0, $discounted_price);
 
+        // Apply category flat rate discount if eligible
+        if ($eligible_for_category_discount) {
+            foreach ($product_categories as $category_id) {
+                if (isset($category_flat_rate_discounts[$category_id])) {
+                    $category_flat_rate_discount = floatval($category_flat_rate_discounts[$category_id]);
+                    $discounted_price -= $category_flat_rate_discount;
+                }
+            }
+        }
 
-// For variable products, return the minimum and maximum discounted price range
+        // For variable products, return the minimum and maximum discounted price range
         if ($product->is_type('variable')) {
             $variation_prices = array();
 
@@ -182,7 +225,7 @@ if ($product->is_type('simple'))  {
 
                 $variation_prices[] = $discounted_variation_price;
             }
-			
+
             // Calculate the minimum and maximum discounted prices for variations
             $min_discounted_price = min($variation_prices);
             $max_discounted_price = max($variation_prices);
@@ -191,8 +234,7 @@ if ($product->is_type('simple'))  {
         }
 
         // For simple products or non-discounted variable products, return the sale price and the discounted price
-        return sprintf('%s <ins>%s</ins>', wc_price($has_sale_price), wc_price($discounted_price));	
-	
+        return sprintf('%s <ins>%s</ins>', wc_price($has_sale_price), wc_price($discounted_price));
     }
 
     // No discount is applicable, show the default WooCommerce behavior
