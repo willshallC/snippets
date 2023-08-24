@@ -7,6 +7,7 @@ Version: 1.0
 Author: Ravi 
 */
 
+
 // Add a sub-menu under the "WooCommerce" menu
 function custom_woocommerce_discounts_submenu() {
     add_submenu_page(
@@ -89,6 +90,7 @@ function custom_woocommerce_discounts_page_callback() {
     echo '</form>';
     echo '</div>';
 }
+
 
 
 function custom_display_discounted_price($price, $product) {
@@ -243,11 +245,13 @@ if ($total_discount > 0) {
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
 
 
+ 
 // Make sure the discounted price is sent to the cart for eligible products
 function custom_set_cart_item_price($cart_object) {
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
     $category_discounts = get_option('product_discount_category_percentage', array());
+    $category_flat_rate_discounts = get_option('product_category_flat_rate_discounts', array());
 
     foreach ($cart_object->cart_contents as $cart_item_key => $cart_item) {
         $product = $cart_item['data'];
@@ -291,6 +295,17 @@ function custom_set_cart_item_price($cart_object) {
 
         // Ensure the discounted price doesn't go below zero
         $discounted_price = max(0, $discounted_price);
+
+        // Calculate and apply category flat rate discount
+        $category_discount = 0;
+        foreach ($product_categories as $category_id) {
+            if (isset($category_flat_rate_discounts[$category_id])) {
+                $category_discount += floatval($category_flat_rate_discounts[$category_id]);
+            }
+        }
+
+        // Apply category flat rate discount to the discounted price
+        $discounted_price -= $category_discount;
 
         // Set the discounted price only for eligible products
         if ($product->is_type('simple') || $product->is_type('variation')) {
