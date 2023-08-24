@@ -23,7 +23,7 @@ add_action('admin_menu', 'custom_woocommerce_discounts_submenu');
 
 function custom_woocommerce_discounts_page_callback() {
     // Check if the form is submitted
-	if (isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {
         // Save the global discount percentage, flat rate, and category-specific discounts in the database
         $global_discount_percentage = floatval($_POST['global_discount_percentage']);
         $flat_rate_discount = floatval($_POST['flat_rate_discount']);
@@ -33,6 +33,9 @@ function custom_woocommerce_discounts_page_callback() {
 
         $category_discounts = $_POST['category_discount'];
         update_option('product_discount_category_percentage', $category_discounts);
+
+        $category_flat_rate_discounts = array_map('floatval', $_POST['category_flat_rate_discount']);
+        update_option('product_category_flat_rate_discounts', $category_flat_rate_discounts);
     } 
 
 
@@ -40,38 +43,45 @@ function custom_woocommerce_discounts_page_callback() {
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
     $category_discounts = get_option('product_discount_category_percentage', array());
+    $category_flat_rate_discounts = get_option('product_category_flat_rate_discounts', array());
 
     // Add your custom sub-menu page content here
     echo '<div class="wrap">';
-    echo '<h1>Product Discounts</h1>';
+    echo '<h2 style="font-size:30px;">Product Discounts :</h2>';
     // Add your custom settings/options/forms here
+    
     echo '<form method="post">';
-    echo '<label for="global_discount_percentage"><h2>Global Discount Percentage:</h2></label>';
+    echo '<label for="global_discount_percentage"><h2 style="font-size:20px;">Global Discount Percentage :</h2></label>';
     echo '<input type="number" name="global_discount_percentage" id="global_discount_percentage" min="0" max="100" step="0.01" value="' . esc_attr($global_discount_percentage) . '">';
     echo '<br><br>';
 
-    echo '<label for="flat_rate_discount"><h2>Flat Rate Discount:</h2></label>';
+    echo '<label for="flat_rate_discount"><h2 style="font-size:20px;">Global Flat Rate Discount :</h2></label>';
     echo '<input type="number" name="flat_rate_discount" id="flat_rate_discount" min="0" step="0.01" value="' . esc_attr($flat_rate_discount) . '">';
     echo '<br>';
 
-    echo '<h2>Category-Specific Discounts:</h2>';
+    echo '<h2 style="font-size:20px;">Specific Category Discounts :</h2>';
 	
     echo '<table>';
-    echo '<tr><th>Category</th><th>Discount Percentage</th></tr>';
+    echo '<tr><th><h3>Category</h3></th><th><h3>Discount Percentage</h3></th><th><h3>Flat Rate Discount</h3></th></tr>';
 
     // Retrieve all product categories
     $product_categories = get_terms('product_cat', array('hide_empty' => false));
 
-    foreach ($product_categories as $category) {
-        $category_id = $category->term_id;
-        $category_name = $category->name;
-        $category_discount_percentage = isset($category_discounts[$category_id]) ? floatval($category_discounts[$category_id]) : 0;
+	foreach ($product_categories as $category) {
+		$category_id = $category->term_id;
+		$category_name = $category->name;
+		
+		$category_discount_percentage = isset($category_discounts[$category_id]) ? floatval($category_discounts[$category_id]) : 0;
+		
+		$category_flat_rate_discount = isset($category_flat_rate_discounts[$category_id]) ? floatval($category_flat_rate_discounts[$category_id]) : 0;
 
-        echo '<tr>';
-        echo '<td>' . esc_html($category_name) . '</td>';
-        echo '<td><input type="number" name="category_discount[' . $category_id . ']" min="0" max="100" step="0.01" value="' . esc_attr($category_discount_percentage) . '"></td>';
-        echo '</tr>';
-    }
+		echo '<tr>';
+		echo '<td>' . esc_html($category_name) . '</td>';
+		echo '<td><input type="number" name="category_discount[' . $category_id . ']" min="0" max="100" step="0.01" value="' . esc_attr($category_discount_percentage) . '"></td>';
+		
+		echo '<td><input type="number" name="category_flat_rate_discount[' . $category_id . ']" step="0.01" value="' . esc_attr($category_flat_rate_discount) . '"></td>';
+		echo '</tr>';
+	}
 
     echo '</table>';
     echo '<br>';
