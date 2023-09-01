@@ -58,6 +58,18 @@
 		sizeSelector.addEventListener("change", () => {
 		const selectedSize = sizeSelector.value;
 		const availablePacks = availableOptions[selectedSize] || [];
+		
+		// Clear previous options
+		packsSelector.innerHTML = "";
+
+		// Add available packs as options
+		availablePacks.forEach(pack => {
+		  const option = document.createElement("option");
+		  option.value = pack;
+		  option.textContent = pack;
+		  packsSelector.appendChild(option);
+		});
+	  });
       </script>
 </body>
 </html>
