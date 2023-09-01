@@ -53,6 +53,11 @@
           "200ml": ["1"],
           "50ml": ["1", "12"]
         };
+		
+		// Update the packs dropdown based on the selected size
+		sizeSelector.addEventListener("change", () => {
+		const selectedSize = sizeSelector.value;
+		const availablePacks = availableOptions[selectedSize] || [];
       </script>
 </body>
 </html>
