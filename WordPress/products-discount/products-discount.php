@@ -16,13 +16,13 @@ function custom_woocommerce_discounts_submenu() {
         'Product Discounts',
         'manage_options',
         'custom-woocommerce-discounts',
-        'custom_woocommerce_discounts_page'
+        'custom_woocommerce_discounts_page_callback'
     );
 }
 add_action('admin_menu', 'custom_woocommerce_discounts_submenu');
 
 
-function custom_woocommerce_discounts_page() {
+function custom_woocommerce_discounts_page_callback() {
     // Check if the form is submitted
     if (isset($_POST['submit'])) {
         // Save the global discount percentage, flat rate, and category-specific discounts in the database
@@ -47,7 +47,7 @@ function custom_woocommerce_discounts_page() {
 
     // Add your custom sub-menu page content here
     echo '<div class="wrap">';
-	  echo '<h2 style="font-size:30px;">Product Discounts :</h2>';
+		echo '<h2 style="font-size:30px;">Product Discounts :</h2>';
 		// Add your custom settings/options/forms here
 		
 	  echo '<form method="post">';
@@ -61,6 +61,7 @@ function custom_woocommerce_discounts_page() {
 			 </label>';
 		echo '<input type="number" name="flat_rate_discount" id="flat_rate_discount" min="0" step="0.01" value="' . esc_attr($flat_rate_discount) . '">';
 
+
 		echo '<h2 style="font-size:20px;">Specific Category Discounts :</h2>';
 		
 		echo '<table>';
@@ -69,13 +70,6 @@ function custom_woocommerce_discounts_page() {
 		// Retrieve all product categories
 		$product_categories = get_terms('product_cat', array('hide_empty' => false));
 
-
-		/*
-		// Use print_r to display the array
-		echo '<pre>';
-			print_r($product_categories);
-		echo '</pre>';
-		*/
 
 		foreach ($product_categories as $category) {
 			$category_id = $category->term_id;
@@ -101,65 +95,105 @@ function custom_woocommerce_discounts_page() {
 }
 
 
+
 function custom_display_discounted_price($price, $product) {
     $global_discount_percentage = get_option('product_discount_global_percentage', 0);
     $flat_rate_discount = get_option('product_discount_flat_rate', 0);
     $category_discounts = get_option('product_discount_category_percentage', array());
     $category_flat_rate_discounts = get_option('product_category_flat_rate_discounts', array());
-
-    $regular_price = $product->get_regular_price();
-    $has_sale_price = $product->get_sale_price();
-
-
-	if ($product->is_type('simple') || $product->is_type('variable')) {
-        $total_discount = 0;
 	
-   // if ($product->is_type('simple')) {
-    //    $total_discount = 0;
+	if ($product->is_type('simple') || $product->is_type('variation')) {
+        $regular_price = $product->get_regular_price();
+        $sale_price = $product->get_sale_price();
+        $has_sale_price = ($sale_price && $sale_price !== $regular_price);
 
-        if ($global_discount_percentage > 0) {
-            // Calculate global percentage-based discount
-            $total_discount += ($has_sale_price ?: $regular_price) * ($global_discount_percentage / 100);
-        }
+        $max_discount = max($global_discount_percentage, 0);
+        $category_ids = wp_get_post_terms($product->get_id(), 'product_cat', array('fields' => 'ids'));
 
-        if ($has_sale_price && $has_sale_price !== $regular_price) {
-            // Calculate global flat rate discount
-            $total_discount += $flat_rate_discount;
-        } else {
-            $total_discount += $flat_rate_discount;
-        }
-
-        foreach ($product->get_category_ids() as $category_id) {
+        foreach ($category_ids as $category_id) {
             if (isset($category_discounts[$category_id])) {
-                // Calculate category-specific percentage-based discount
-                $category_discount_percentage = floatval($category_discounts[$category_id]);
-                $total_discount += ($has_sale_price ?: $regular_price) * ($category_discount_percentage / 100);
-
-                // Calculate category-specific flat rate discount
-                if (isset($category_flat_rate_discounts[$category_id])) {
-                    $total_discount += floatval($category_flat_rate_discounts[$category_id]);
-                }
+                $max_discount = max($max_discount, floatval($category_discounts[$category_id]));
             }
         }
 		
-			
-		// Display the total discount amount
-		if ($total_discount > 0) {
-			echo '<p class="total-discount">' . sprintf(__('You Save: %s', 'your-text-domain'), wc_price($total_discount)) . '</p>';
-		}
+		$discounted_price = $regular_price;
 		
-		
-        if ($total_discount > 0) {
-            $discounted_price = ($has_sale_price ?: $regular_price) - $total_discount;
-            $discounted_price = max(0, $discounted_price);
-            return sprintf('<del>%s</del> <ins>%s</ins>', wc_price($has_sale_price), wc_price($discounted_price));
+		if ($max_discount > 0) {
+            if ($has_sale_price) {
+                $discounted_price = $sale_price - ($sale_price * ($max_discount / 100));
+            } else {
+                $discounted_price = $regular_price - ($regular_price * ($max_discount / 100));
+            }
+        } elseif ($has_sale_price) {
+            $discounted_price = $sale_price - $flat_rate_discount;
+        } else {
+            $discounted_price = $regular_price - $flat_rate_discount;
         }
-    }
-    return $price;
+
+        $discounted_price = max(0, $discounted_price);
 		
+		foreach ($category_ids as $category_id) {
+            if (isset($category_flat_rate_discounts[$category_id])) {
+                $discounted_price -= floatval($category_flat_rate_discounts[$category_id]);
+            }
+        }
+
+        if ($discounted_price < 0) {
+            $discounted_price = 0;
+        }
+		
+		
+		$discount_amount = $sale_price - $discounted_price;
+        if ($discount_amount > 0) {
+            // Display the total discount amount
+            $discount_text = 'You Save - ' . wc_price($discount_amount);
+            $price = sprintf('<del>%s</del> <ins>%s</ins>  <p class="discount-amount">%s</p>', wc_price($sale_price), wc_price($discounted_price), $discount_text);
+        }else {
+            // If no discount, just display the price
+            //$price = wc_price($discounted_price);
+			$price = sprintf('<ins>%s</ins>  <p class="discount-amount">%s</p>', wc_price($sale_price), wc_price($discounted_price), $discount_text);
+			
+			
+        }
+    }elseif ($product->is_type('variable')) {
+        // For variable products, display the discounted price range
+        $global_discount_percentage = get_option('product_discount_global_percentage', 0);
+        $flat_rate_discount = get_option('product_discount_flat_rate', 0);	
+	
+	$discounted_price = $product->get_price();
+
+        if ($global_discount_percentage > 0) {
+            $discounted_price -= ($discounted_price * ($global_discount_percentage / 100));
+        } else {
+            $discounted_price -= $flat_rate_discount;
+        }
+
+        $discounted_price = max(0, $discounted_price);
+
+        $price = wc_price($discounted_price);
+	
+	
+        $variation_min_price = $product->get_variation_price('min', true);
+        $variation_max_price = $product->get_variation_price('max', true);
+
+        if ($global_discount_percentage > 0) {
+            $min_discounted_price = $variation_min_price - ($variation_min_price * ($global_discount_percentage / 100));
+            $max_discounted_price = $variation_max_price - ($variation_max_price * ($global_discount_percentage / 100));
+        } else {
+            $min_discounted_price = $variation_min_price - $flat_rate_discount;
+            $max_discounted_price = $variation_max_price - $flat_rate_discount;
+        }
+
+        $min_discounted_price = max(0, $min_discounted_price);
+        $max_discounted_price = max(0, $max_discounted_price);
+
+        $price = sprintf('%s - %s', wc_price($min_discounted_price), wc_price($max_discounted_price));
+    }	
+	    return $price;
+	
 }
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
-
+	
 
 // Make sure the discounted price is sent to the cart for eligible products
 function custom_set_cart_item_price($cart_object) {
