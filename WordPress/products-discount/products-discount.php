@@ -1,3 +1,8 @@
+<style>
+	span.price ins {
+		display: none !important;
+	}
+</style>
 <?php
 /*
 Plugin Name: Products Discount
