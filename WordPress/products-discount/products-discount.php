@@ -145,7 +145,8 @@ function custom_display_discounted_price($price, $product) {
         if ($discounted_price < 0) {
             $discounted_price = 0;
         }
-				
+		
+		
 		$discount_amount = $sale_price - $discounted_price;
         if ($discount_amount > 0) {
             // Display the total discount amount
@@ -154,7 +155,9 @@ function custom_display_discounted_price($price, $product) {
         }else {
             // If no discount, just display the price
             //$price = wc_price($discounted_price);
-			$price = sprintf('<ins>%s</ins>  <p class="discount-amount">%s</p>', wc_price($sale_price), wc_price($discounted_price), $discount_text);						
+			$price = sprintf('<ins>%s</ins>  <p class="discount-amount">%s</p>', wc_price($sale_price), wc_price($discounted_price), $discount_text);
+			
+			
         }
     }elseif ($product->is_type('variable')) {
         // For variable products, display the discounted price range
@@ -189,13 +192,12 @@ function custom_display_discounted_price($price, $product) {
         $max_discounted_price = max(0, $max_discounted_price);
 
         $price = sprintf('%s - %s', wc_price($min_discounted_price), wc_price($max_discounted_price));
-    }
-	
-	return $price;
+    }	
+	    return $price;
 	
 }
 add_filter('woocommerce_get_price_html', 'custom_display_discounted_price', 10, 2);
-	
+
 
 // Make sure the discounted price is sent to the cart for eligible products
 function custom_set_cart_item_price($cart_object) {
