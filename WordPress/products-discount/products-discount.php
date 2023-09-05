@@ -75,7 +75,6 @@ function custom_woocommerce_discounts_page_callback() {
 		// Retrieve all product categories
 		$product_categories = get_terms('product_cat', array('hide_empty' => false));
 
-
 		foreach ($product_categories as $category) {
 			$category_id = $category->term_id;
 			$category_name = $category->name;
@@ -156,8 +155,7 @@ function custom_display_discounted_price($price, $product) {
             // If no discount, just display the price
             //$price = wc_price($discounted_price);
 			$price = sprintf('<ins>%s</ins>  <p class="discount-amount">%s</p>', wc_price($sale_price), wc_price($discounted_price), $discount_text);
-			
-			
+						
         }
     }elseif ($product->is_type('variable')) {
         // For variable products, display the discounted price range
@@ -193,6 +191,7 @@ function custom_display_discounted_price($price, $product) {
 
         $price = sprintf('%s - %s', wc_price($min_discounted_price), wc_price($max_discounted_price));
     }	
+
 	    return $price;
 	
 }
