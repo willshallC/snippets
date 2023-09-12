@@ -60,3 +60,12 @@ function register_custom_post_types() {
     }
 }
 add_action('init', 'register_custom_post_types');
+
+
+// Register settings for custom post types
+function custom_post_types_settings() {
+    register_setting('custom_post_types_settings_group', 'custom_post_types', 'sanitize_post_types');
+    add_settings_section('custom_post_types_section', 'Custom Post Types', 'custom_post_types_section_callback', 'custom-post-types-settings');
+    add_settings_field('custom_post_types_field', 'Enter Custom Post Types (comma separated)', 'custom_post_types_field_callback', 'custom-post-types-settings', 'custom_post_types_section');
+}
+add_action('admin_init', 'custom_post_types_settings');
