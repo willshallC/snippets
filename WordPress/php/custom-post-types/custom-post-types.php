@@ -69,3 +69,16 @@ function custom_post_types_settings() {
     add_settings_field('custom_post_types_field', 'Enter Custom Post Types (comma separated)', 'custom_post_types_field_callback', 'custom-post-types-settings', 'custom_post_types_section');
 }
 add_action('admin_init', 'custom_post_types_settings');
+
+
+// Sanitize user input
+function sanitize_post_types($input) {
+    $custom_post_types = explode(',', $input);
+    $sanitized_types = array();
+
+    foreach ($custom_post_types as $post_type) {
+        $sanitized_types[] = sanitize_text_field(trim($post_type));
+    }
+
+    return $sanitized_types;
+}
