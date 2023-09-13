@@ -8,6 +8,7 @@ Author: Ravi
 
 */
 
+
 // Add the settings menu item to the admin dashboard
 function custom_post_types_menu() {
     add_menu_page(
@@ -19,6 +20,7 @@ function custom_post_types_menu() {
     );
 }
 add_action('admin_menu', 'custom_post_types_menu');
+
 
 
 // Create the settings page content
@@ -35,6 +37,27 @@ function custom_post_types_settings_page() {
     <?php
 }
 
+function register_custom_taxonomy() {
+    $labels = array(
+        'name' => 'Custom Categories',
+        'singular_name' => 'Custom Category',
+    );
+
+    $args = array(
+        'hierarchical' => true,
+        'labels' => $labels,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'custom-category'), // Adjust the slug as needed
+    );
+
+    register_taxonomy('custom_category', array('your_custom_post_type_slug'), $args);
+}
+add_action('init', 'register_custom_taxonomy');
+
+
+
 // Register custom post types based on user input
 function register_custom_post_types() {
     // Get user-defined post types from the settings
@@ -47,19 +70,23 @@ function register_custom_post_types() {
                 'singular_name' => $post_type,
                 'menu_name' => $post_type,
             );
-
-            $args = array(
-                'labels' => $labels,
-                'public' => true,
-                'has_archive' => true,
-                'rewrite' => array('slug' => sanitize_title($post_type)),
-            );
+			
+			$args = array(
+				'labels' => $labels,
+				'public' => true,
+				'has_archive' => true,
+				'rewrite' => array('slug' => sanitize_title($post_type)),
+				 'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'page-attributes'), 
+				'taxonomies' => array('custom_category'), // Add your taxonomy slug here
+			);
 
             register_post_type(sanitize_title($post_type), $args);
         }
     }
 }
+
 add_action('init', 'register_custom_post_types');
+
 
 
 // Register settings for custom post types
@@ -69,6 +96,7 @@ function custom_post_types_settings() {
     add_settings_field('custom_post_types_field', 'Enter Custom Post Types (comma separated)', 'custom_post_types_field_callback', 'custom-post-types-settings', 'custom_post_types_section');
 }
 add_action('admin_init', 'custom_post_types_settings');
+
 
 
 // Sanitize user input
@@ -93,4 +121,31 @@ function custom_post_types_field_callback() {
 // Display section description
 function custom_post_types_section_callback() {
     echo 'Enter custom post types separated by commas.';
+}
+
+
+
+function custom_taxonomy_meta_box() {
+    add_meta_box(
+        'custom_taxonomy_box_id',
+        'Custom Categories',
+        'custom_taxonomy_box_content',
+        'your_custom_post_type_slug', // Replace with your custom post type slug
+        'side', // Change the position of the meta box if needed
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'custom_taxonomy_meta_box');
+
+function custom_taxonomy_box_content($post) {
+    // Display taxonomy input/select field here
+    $terms = wp_get_post_terms($post->ID, 'custom_category'); // Replace with your taxonomy name
+    $selected = !empty($terms) ? $terms[0]->term_id : 0;
+    $taxonomy = get_taxonomy('custom_category'); // Replace with your taxonomy name
+
+    echo '<select name="custom_category">';
+    foreach (get_terms('custom_category') as $term) {
+        echo '<option value="' . esc_attr($term->term_id) . '" ' . selected($selected, $term->term_id, false) . '>' . esc_html($term->name) . '</option>';
+    }
+    echo '</select>';
 }
