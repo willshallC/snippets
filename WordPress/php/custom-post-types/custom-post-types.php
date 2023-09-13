@@ -89,3 +89,8 @@ function custom_post_types_field_callback() {
     $custom_post_types = is_array($custom_post_types) ? implode(', ', $custom_post_types) : '';
     echo "<input type='text' name='custom_post_types' value='" . esc_attr($custom_post_types) . "' />";
 }
+
+// Display section description
+function custom_post_types_section_callback() {
+    echo 'Enter custom post types separated by commas.';
+}
