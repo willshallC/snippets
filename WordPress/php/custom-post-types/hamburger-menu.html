@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 	<style>
 		/* styles.css */
 .menu-button {
@@ -64,5 +65,17 @@
         <li><a href="#">Services</a></li>
         <li><a href="#">Contact</a></li>
     </ul>
+	
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.querySelector('.menu-button');
+    const menu = document.querySelector('.menu');
+
+    menuButton.addEventListener('click', function() {
+        menu.classList.toggle('show-menu');
+    });
+});
+</script>
+
 </body>
 </html>
