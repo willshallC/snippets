@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		/* styles.css */
+.menu-button {
+    display: block;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: #333;
+    margin: 5px 0;
+}
+
+.menu {
+    display: none;
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 10px 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+
+
+/* styles.css */
+.show-menu {
+    display: block;
+}
+
+
+@media screen and (max-width: 768px) {
+    .menu-button {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+    }
+}
+	</style>
 </head>
 <body>
     <div class="menu-button">
