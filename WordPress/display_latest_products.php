@@ -37,3 +37,10 @@ function display_latest_products() {
         wp_reset_postdata();
     }
 }
+// Add a shortcode to easily display the latest products
+function latest_products_shortcode() {
+    ob_start();
+    display_latest_products();
+    return ob_get_clean();
+}
+add_shortcode('latest_products', 'latest_products_shortcode');
