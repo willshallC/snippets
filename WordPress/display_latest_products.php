@@ -20,7 +20,16 @@ function display_latest_products() {
                     <?php the_post_thumbnail(); ?>
                     <h2><?php the_title(); ?></h2>
                     <span class="price"><?php echo $product->get_price_html(); ?></span>
-                  
+                    <?php
+                    // Display product tags
+                    if (!empty($product_tags)) {
+                        echo '<div class="product-tags">';
+                        foreach ($product_tags as $tag) {
+                            echo '<span class="product-tag">' . esc_html($tag->name) . '</span>, ';
+                        }
+                        echo '</div>';
+                    }
+                    ?>
                 </a>
             <?php
         }
