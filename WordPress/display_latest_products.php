@@ -1,4 +1,5 @@
 <?php
+// add this code on function.php file
 function display_latest_products() {
     // Query WooCommerce for the latest 3 products
     $args = array(
