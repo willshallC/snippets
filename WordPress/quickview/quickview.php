@@ -20,3 +20,15 @@ function custom_quick_view_menu() {
     );
 }
 add_action('admin_menu', 'custom_quick_view_menu');
+
+
+// Callback function to display the settings page
+function custom_quick_view_settings_page() {
+	?>
+    <div class="wrap">
+		<h1>Custom Quick View Settings</h1>
+		<h2>Shortcode : <span style="color:#1877f2;">[latest_products] </span></h2>
+    </div>
+<?php
+
+}
