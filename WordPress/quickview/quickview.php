@@ -5,3 +5,18 @@ Description: Add a quick view feature to your WordPress site.
 Version: 1.0
 Author: Ravi
 */
+
+
+// Add admin menu page for the plugin
+function custom_quick_view_menu() {
+    add_menu_page(
+        'Custom Quick View Settings', // Page title
+        'Custom Quick View',         // Menu title
+        'manage_options',            // Capability required to access
+        'custom-quick-view-settings', // Menu slug
+        'custom_quick_view_settings_page', // Callback function to display the page
+        'dashicons-cart',            // Icon URL or Dashicon name
+        100                          // Menu position
+    );
+}
+add_action('admin_menu', 'custom_quick_view_menu');
