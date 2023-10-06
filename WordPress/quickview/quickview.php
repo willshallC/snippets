@@ -44,3 +44,15 @@ wp_enqueue_script( 'custom-script', plugin_dir_url(__FILE__) . '/quickview.js', 
 wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/quickview.css', array(), '1.0' );
 }
 add_action('wp_enqueue_scripts', 'custom_quick_view_enqueue_scripts');
+
+
+function display_latest_products() {
+    // Query WooCommerce for the latest 3 products
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => 3,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    );
+
+}
