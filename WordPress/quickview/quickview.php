@@ -32,3 +32,15 @@ function custom_quick_view_settings_page() {
 <?php
 
 }
+
+
+// Enqueue the JavaScript and CSS for the quick view functionality.
+function custom_quick_view_enqueue_scripts() {
+
+// Enqueue JavaScript file
+wp_enqueue_script( 'custom-script', plugin_dir_url(__FILE__) . '/quickview.js', array('jquery'), '1.0', true );
+
+//Enqueue CSS file
+wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/quickview.css', array(), '1.0' );
+}
+add_action('wp_enqueue_scripts', 'custom_quick_view_enqueue_scripts');
