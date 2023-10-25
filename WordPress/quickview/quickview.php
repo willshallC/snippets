@@ -46,40 +46,22 @@ wp_enqueue_style( 'custom-css', plugin_dir_url(__FILE__) . '/quickview.css', arr
 add_action('wp_enqueue_scripts', 'custom_quick_view_enqueue_scripts');
 
 
-function display_latest_products() {
-    // Query WooCommerce for the latest 3 products
-    $args = array(
+function latest_products_shortcode($attss) {
+    // Parse shortcode attributes
+    $attss = shortcode_atts(array(
+        'per_page' => 3, // Default to 3 products per page
+        'pagination' => 'no', // Default to no pagination
+    ), $attss);
+	
+    // Query to retrieve the latest products
+    $argss = array(
         'post_type' => 'product',
-        'posts_per_page' => 3,
+        'posts_per_page' => $attss['per_page'],
         'orderby' => 'date',
         'order' => 'DESC',
+        'paged' => get_query_var('paged') ? get_query_var('paged') : 1,
     );
-    $query = new WP_Query($args);
-    if ($query->have_posts()) {
-        echo '<div class="latest-products">';
-        while ($query->have_posts()) {
-            $query->the_post();
-            global $product;
-            // Get product tags
-            
-            ?>
-                <a href="<?php the_permalink(); ?>">
-                    <?php the_post_thumbnail(); ?>
-                    <h2><?php the_title(); ?></h2>
-                    <span class="price"><?php echo $product->get_price_html(); ?></span>
-                  
-                </a>
-            <?php
-        }
-        echo '</div>';
-        wp_reset_postdata();
-    }
 }
-// Add a shortcode to easily display the latest products
-function latest_products_shortcode() {
-    ob_start();
-    display_latest_products();
-    return ob_get_clean();
-}
+// Register the shortcode
 add_shortcode('latest_products', 'latest_products_shortcode');
 
