@@ -30,9 +30,7 @@ function custom_quick_view_settings_page() {
 		<h2>Shortcode : <span style="color:#1877f2;">[latest_products] </span></h2>
     </div>
 <?php
-
 }
-
 
 // Enqueue the JavaScript and CSS for the quick view functionality.
 function custom_quick_view_enqueue_scripts() {
@@ -68,7 +66,7 @@ function latest_products_shortcode($attss) {
         echo '<ul class="latest-products">';
         while ($products->have_posts()) {
              $products->the_post();
-            $product_id = get_the_ID(); // Get the product ID
+            $product_id = get_the_ID(); 
             $permalink = get_permalink(get_the_ID());
             echo '<li class="product">';       
             
@@ -120,8 +118,7 @@ function latest_products_shortcode($attss) {
             
 			echo '<div class="modal-content">';
             echo '<div class="modal-cont-wrap">';
-			
-            			
+			            			
             echo '<div class="product-img">' . get_the_post_thumbnail() . '</div>';
 			
             echo '<div class="modal-right-cont">';
@@ -161,8 +158,7 @@ function latest_products_shortcode($attss) {
 					} else {
 						echo '<span class="tag">' . esc_html($tag->name) . '</span>';
 					}
-				}
-				
+				}				
 			}
 			
             echo '</div>';
