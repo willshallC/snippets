@@ -9,7 +9,6 @@
  * License: GPL2
  */
 
-
 // Enqueue stylesheets and scripts
 function product_blog_manager_enqueue_scripts() {
     wp_enqueue_style( 'product-blog-manager-styles', plugin_dir_url( __FILE__ ) . 'css/style.css' );
@@ -22,6 +21,7 @@ function product_blog_manager_enqueue_scripts_admin() {
     wp_enqueue_script( 'product-blog-manager-scripts', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery', 'select2' ), '', true );
 }
 add_action( 'admin_enqueue_scripts', 'product_blog_manager_enqueue_scripts_admin' );
+
 
 // Add a new meta box to the product editor screen
 function product_blog_manager_add_meta_box() {
