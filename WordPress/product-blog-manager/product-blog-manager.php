@@ -42,14 +42,13 @@ function product_blog_manager_meta_box_content( $post ) {
     ) );
     
     // Display the blog selection dropdown with search
-    echo '<select name="assigned_blogs[]" multiple="multiple" class="product-blog-manager-blog-dropdown" style="width:100%;" data-placeholder="Select blogs...">';
-    
+    echo '<select name="assigned_blogs[]" multiple="multiple" class="product-blog-manager-blog-dropdown" style="width:100%;" data-placeholder="Select blogs...">';  
     foreach ( $blog_posts as $blog_post ) {
         $selected = in_array( $blog_post->ID, $assigned_blogs ) ? 'selected' : '';
         echo '<option value="' . $blog_post->ID . '" ' . $selected . '>' . $blog_post->post_title . '</option>';
-    }
-    
+    }  
     echo '</select>';  
+
     // Add a nonce field for security
     wp_nonce_field( 'product_blog_manager_save_meta_box', 'product_blog_manager_nonce' );
 }
