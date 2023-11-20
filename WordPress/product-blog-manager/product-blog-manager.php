@@ -49,8 +49,7 @@ function product_blog_manager_meta_box_content( $post ) {
         echo '<option value="' . $blog_post->ID . '" ' . $selected . '>' . $blog_post->post_title . '</option>';
     }
     
-    echo '</select>';
-    
+    echo '</select>';  
     // Add a nonce field for security
     wp_nonce_field( 'product_blog_manager_save_meta_box', 'product_blog_manager_nonce' );
 }
