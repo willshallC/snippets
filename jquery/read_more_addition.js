@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // Function to truncate text and add "Read More" button
+    // Function to truncate text and add Read More button
     function truncateText(element, maxLength) {
       var content = element.html();
       var truncated = content.split(" ").splice(0, maxLength).join(" ");
@@ -16,5 +16,9 @@ $(document).ready(function() {
             element.html(content);
           }
     }
+    // Apply the function to each element with the class 'feture_body_text'
+    $('.review-bodyyy').each(function() {
+      truncateText($(this), 35);
+    });
 
 });
