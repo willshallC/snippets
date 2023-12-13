@@ -8,7 +8,12 @@ jQuery(document).ready(function() {
       var finalpos = Math.round(position - positionn + 60);
       jQuery('.active-times').css('height', finalpos + 'px');
     }
-    
-	
-
+    // Call the function on document ready
+    checkPosition();
+    // Call the function on window resize (to handle dynamic changes)
+    jQuery(document).on('click','.toggle-main-head', function (){
+      setTimeout(function() {
+        checkPosition();
+    }, 500);
+    });
   });
