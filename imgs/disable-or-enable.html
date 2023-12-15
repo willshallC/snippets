@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Button Hover Example</title>
+  <style>
+    .button {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ccc; 
+    }
+
+    #button1.active,
+    #button1:hover {
+      background-color: #007bff; 
+      color: #fff;  
+    }
+
+    #button2.active {
+      background-color: #007bff; 
+      color: #fff; 
+    }
+
+    #button2:hover {
+      background-color: yellow; 
+      color: #000; 
+    }
+  </style>
+</head>
+<body>
+  <div class="button-container">
+    <button class="button active" id="button1">Button 1</button>
+    <button class="button" id="button2">Button 2</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var buttons = document.querySelectorAll('.button');
+
+      buttons.forEach(function (button) {
+        button.addEventListener('mouseover', function () {
+          // Apply hover effect
+          removeActiveClass();
+          button.classList.add('active');
+        });
+
+       
+      });
+
+      
+    });
+  </script>
+</body>
+</html>
