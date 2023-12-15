@@ -47,10 +47,18 @@
           button.classList.add('active');
         });
 
-       
+        button.addEventListener('click', function () {
+          // Apply active class on click
+          removeActiveClass();
+          button.classList.add('active');
+        });
       });
 
-      
+      function removeActiveClass() {
+        buttons.forEach(function (button) {
+          button.classList.remove('active');
+        });
+      }
     });
   </script>
 </body>
